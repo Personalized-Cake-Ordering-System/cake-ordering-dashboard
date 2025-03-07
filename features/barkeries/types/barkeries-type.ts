@@ -21,122 +21,45 @@ export type IAvatar = {
 export interface BakeryType {
   id: string;
   name: string;
-  logo?: string;
-  bannerImage?: string;
-  description?: string;
+  description: string;
   address: string;
-  contactNumber?: string;
-  email?: string;
-  website?: string;
-  operatingHours?: string;
+  contactNumber: string;
+  email: string;
+  logo: string;
+  bannerImage: string;
   rating: number;
-  totalReviews: number | string;
-  followerCount: number | string;
+  totalReviews: number;
+  followerCount: string;
   productCount: number;
   currentlyViewing?: number;
-  establishedDate?: string;
-  responseRate?: string;
   isVerified: boolean;
   isActive: boolean;
   ownerId: string;
-  ownerName?: string;
-  specialties?: string[];
-  promotions?: BakeryPromotion[];
+  ownerName: string;
+  specialties: string[];
+  establishedDate?: string;
+  responseRate?: string;
   createdAt: string;
   updatedAt: string;
 }
 
-export interface BakeryPromotion {
-  id: number | string;
-  title?: string;
-  discount: string;
-  minSpend: string;
-  maxDiscount: string;
-  expires: string;
-  used?: string;
-  isActive?: boolean;
-  startDate?: string;
-  endDate?: string;
-}
-
-export interface CreateBakeryDto {
-  name: string;
-  logo?: string | File;
-  bannerImage?: string | File;
-  description?: string;
-  address: string;
-  contactNumber?: string;
-  email?: string;
-  website?: string;
-  operatingHours?: string;
-  ownerId?: string;
-  specialties?: string[];
-}
-
-export interface UpdateBakeryDto {
-  name?: string;
-  logo?: string | File;
-  bannerImage?: string | File;
-  description?: string;
-  address?: string;
-  contactNumber?: string;
-  email?: string;
-  website?: string;
-  operatingHours?: string;
-  isActive?: boolean;
-  specialties?: string[];
-}
-
-export interface BakeryFilters {
-  search?: string;
-  rating?: number;
+export interface BakeryFilterParams {
   isVerified?: boolean;
   isActive?: boolean;
-  sortBy?: "name" | "rating" | "followers" | "products" | "createdAt";
-  sortOrder?: "asc" | "desc";
+  minRating?: number;
+  specialties?: string[];
 }
 
-export interface BakeryStats {
-  totalProducts: number;
-  totalSales: number;
-  totalRevenue: number;
-  averageRating: number;
-  totalFollowers: number;
-  topProducts: {
-    id: string;
-    name: string;
-    sales: number;
-  }[];
-  salesByMonth: {
-    month: string;
-    sales: number;
-    revenue: number;
-  }[];
-}
-
-export interface BakeryProduct {
-  id: string;
+export interface CreateBakeryInput {
   name: string;
-  description?: string;
-  price: number;
-  discountedPrice?: number;
-  image?: string;
-  category: string;
-  rating: number;
-  sold: number;
-  inStock: boolean;
-  bakeryId: string;
-}
-
-export interface BakeryReview {
-  id: string;
-  userId: string;
-  userName: string;
-  userAvatar?: string;
-  rating: number;
-  comment: string;
-  images?: string[];
-  createdAt: string;
-  productId?: string;
-  productName?: string;
+  description: string;
+  address: string;
+  contactNumber: string;
+  email: string;
+  logo?: string;
+  bannerImage?: string;
+  ownerId: string;
+  ownerName: string;
+  specialties: string[];
+  isActive?: boolean;
 }

@@ -1,4 +1,3 @@
-'use client';
 import { Suspense } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -19,9 +18,9 @@ export default async function BakeryPage({ params }: { params: { id: string } })
     const bakeryData = await getBakeryById(params.id);
 
     const breadcrumbItems = [
-        { title: 'Dashboard', link: '/dashboard' },
-        { title: 'Bakeries', link: '/dashboard/bakeries' },
-        { title: bakeryData?.name || 'Bakery Details', link: `/dashboard/bakeries/${params.id}` },
+        { label: 'Dashboard', href: '/dashboard', isLast: false },
+        { label: 'Bakeries', href: '/dashboard/bakeries', isLast: false },
+        { label: bakeryData?.name || 'Bakery Details', href: `/dashboard/bakeries/${params.id}`, isLast: true },
     ];
 
     return (
@@ -40,7 +39,7 @@ function BakeryDetails({ bakery }: { bakery: any }) {
     const mockBakery = {
         id: bakery?.id || '123',
         name: bakery?.name || 'Sweet Delights Bakery',
-        logo: bakery?.logo || '/images/bakery-logo-placeholder.png',
+        logo: bakery?.logo || '/images/auth/auth-illustration.png',
         online: '1 hour ago',
         products: bakery?.productCount || 492,
         followers: bakery?.followerCount || '493.1k',
@@ -57,12 +56,12 @@ function BakeryDetails({ bakery }: { bakery: any }) {
             { id: 4, discount: '10%', minSpend: '₫240k', maxDiscount: '₫50k', expires: 'In 2 hours', used: '75%' }
         ],
         recommendedProducts: [
-            { id: 1, name: 'Chocolate Cake', image: '/api/placeholder/200/200', price: 300, discountedPrice: 255 },
-            { id: 2, name: 'Strawberry Cake', image: '/api/placeholder/200/200', price: 300, discountedPrice: 255 },
-            { id: 3, name: 'Cheesecake', image: '/api/placeholder/200/200', price: 300, discountedPrice: 255 },
-            { id: 4, name: 'Red Velvet Cake', image: '/api/placeholder/200/200', price: 300, discountedPrice: 255 },
-            { id: 5, name: 'Vanilla Cake', image: '/api/placeholder/200/200', price: 300, discountedPrice: 255 },
-            { id: 6, name: 'Tiramisu', image: '/api/placeholder/200/200', price: 300, discountedPrice: 255 }
+            { id: 1, name: 'Chocolate Cake', image: '/images/auth/auth-illustration.png', price: 300, discountedPrice: 255 },
+            { id: 2, name: 'Strawberry Cake', image: '/images/auth/auth-illustration.png', price: 300, discountedPrice: 255 },
+            { id: 3, name: 'Cheesecake', image: '/images/auth/auth-illustration.png', price: 300, discountedPrice: 255 },
+            { id: 4, name: 'Red Velvet Cake', image: '/images/auth/auth-illustration.png', price: 300, discountedPrice: 255 },
+            { id: 5, name: 'Vanilla Cake', image: '/images/auth/auth-illustration.png', price: 300, discountedPrice: 255 },
+            { id: 6, name: 'Tiramisu', image: '/images/auth/auth-illustration.png', price: 300, discountedPrice: 255 }
         ]
     };
 
@@ -74,7 +73,7 @@ function BakeryDetails({ bakery }: { bakery: any }) {
                     <div className="flex items-center gap-4">
                         <div className="relative h-24 w-24 rounded-full overflow-hidden bg-white p-1">
                             <Image
-                                src="/api/placeholder/100/100"
+                                src={'/images/auth/auth-illustration.png'}
                                 alt={mockBakery.name}
                                 width={100}
                                 height={100}
@@ -148,7 +147,7 @@ function BakeryDetails({ bakery }: { bakery: any }) {
                     <div className="bg-gray-50 p-4 rounded-lg">
                         <div className="flex items-center justify-between mb-4">
                             <h2 className="text-lg font-semibold">Available Promotions</h2>
-                            <Link href="#" className="text-red-600 text-sm font-medium">View All &gt;</Link>
+                            <Link href="/dashboard/bakeries/promotions" className="text-red-600 text-sm font-medium">View All &gt;</Link>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                             {mockBakery.promotions.map((promo) => (
@@ -178,7 +177,7 @@ function BakeryDetails({ bakery }: { bakery: any }) {
                     <div className="space-y-4">
                         <div className="flex items-center justify-between">
                             <h2 className="text-lg font-semibold">Recommended For You</h2>
-                            <Link href="#" className="text-red-600 text-sm font-medium">View All &gt;</Link>
+                            <Link href="/dashboard/bakeries/recommended" className="text-red-600 text-sm font-medium">View All &gt;</Link>
                         </div>
                         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
                             {mockBakery.recommendedProducts.map((product) => (

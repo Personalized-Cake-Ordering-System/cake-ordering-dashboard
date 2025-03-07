@@ -44,7 +44,7 @@ const DashboardLayout = ({ children }: { children: ReactNode }) => {
 
               <div>
                 <ModeToggleAnimate />
-                <UserProfileDropdown/>
+                <UserProfileDropdown />
               </div>
             </header>
 

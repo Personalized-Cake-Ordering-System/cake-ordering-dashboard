@@ -1,42 +1,3 @@
-// import { FeatureFlagsToggle } from "@/components/data-table/custom-table/featureflag-toogle";
-// import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton";
-// import { Shell } from "@/components/shared/custom-ui/shell";
-// import { getBakeries } from "@/features/barkeries/actions/barkeries-action";
-// import { BakeriesTable } from "@/features/barkeries/components/bakery-table/bakery-table";
-// import { SearchParams } from "@/types/table";
-// import React from "react";
-
-// export interface IndexPageProps {
-//   searchParams: SearchParams;
-// }
-// const BarkeriesPage = ({ searchParams }: IndexPageProps) => {
-//   const bakeryPromise = getBakeries(searchParams);
-
-//   return (
-//     <div className="min-w-full ">
-//       <Shell>
-//         <React.Suspense
-//           fallback={
-//             <DataTableSkeleton
-//               columnCount={5}
-//               searchableColumnCount={1}
-//               filterableColumnCount={2}
-//               cellWidths={["10rem", "40rem", "12rem", "12rem", "8rem"]}
-//               shrinkZero
-//             />
-//           }
-//         >
-//           <FeatureFlagsToggle />
-
-//           <BakeriesTable bakeryPromise={bakeryPromise} />
-//         </React.Suspense>
-//       </Shell>
-//     </div>
-//   );
-// };
-
-// export default BarkeriesPage;
-
 import { Suspense } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -60,6 +21,7 @@ import { LoadingSpinner } from '@/components/shared/custom-ui/loading-spinner';
 
 import { getAllBakeries } from '@/features/barkeries/actions/barkeries-action';
 import { BakeryType } from '@/features/barkeries/types/barkeries-type';
+import { log } from 'console';
 
 export default async function BakeriesPage({
   searchParams,
@@ -69,7 +31,11 @@ export default async function BakeriesPage({
   const breadcrumbItems = [
     { title: 'Dashboard', link: '/dashboard' },
     { title: 'Bakeries', link: '/dashboard/bakeries' },
-  ];
+  ].map((item, index, array) => ({
+    label: item.title,
+    href: item.link,
+    isLast: index === array.length - 1
+  }));
 
   const page = Number(searchParams.page) || 1;
   const search = searchParams.search || '';
@@ -172,8 +138,8 @@ async function BakeriesList({
     address: `${123 + i} Baker Street, Sweet City`,
     contactNumber: '+1 (555) 123-4567',
     email: `bakery${i + 1}@example.com`,
-    logo: '/api/placeholder/100/100',
-    bannerImage: '/api/placeholder/400/250',
+    logo: '/images/auth/auth-illustration.png',
+    bannerImage: '/images/auth/auth-illustration.png',
     rating: 4.5 + (Math.random() * 0.5),
     totalReviews: Math.floor(100 + Math.random() * 900),
     followerCount: `${Math.floor(1 + Math.random() * 10)}k`,
@@ -204,7 +170,7 @@ async function BakeriesList({
             <Card className="h-full overflow-hidden hover:shadow-md transition-shadow duration-200 cursor-pointer">
               <div className="aspect-[4/3] relative overflow-hidden">
                 <Image
-                  src={bakery.bannerImage || '/api/placeholder/400/300'}
+                  src={bakery.bannerImage || '/public/images/auth/auth-illustration.png'}
                   alt={bakery.name}
                   fill
                   className="object-cover"
@@ -221,7 +187,7 @@ async function BakeriesList({
                 <div className="flex items-center gap-4 mb-3">
                   <div className="h-14 w-14 rounded-full overflow-hidden relative bg-gray-100 border flex-shrink-0">
                     <Image
-                      src={bakery.logo || '/api/placeholder/56/56'}
+                      src={bakery.logo || '/public/images/auth/auth-illustration.png'}
                       alt={`${bakery.name} logo`}
                       fill
                       className="object-cover"
