@@ -14,20 +14,12 @@ import NextTopLoader from "nextjs-toploader";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteConfig.url),
   title: {
     default: siteConfig.name,
     template: `%s - ${siteConfig.name}`,
   },
   description: siteConfig.description,
-  keywords: ["nextjs", "movemate"],
-  authors: [
-    {
-      name: "vinhnt2002",
-      url: "https://portfolio-vinhnt2002.vercel.app",
-    },
-  ],
-  creator: "vinhnt2002",
+
   icons: {
     icon: "/images/icons_favicon/icon.png",
   },
