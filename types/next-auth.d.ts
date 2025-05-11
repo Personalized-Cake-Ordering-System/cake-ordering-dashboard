@@ -7,24 +7,24 @@ declare module "next-auth" {
   
   interface Session {
     user: {
-      id: string;
-      email: string;
-      role: string;
-      name: string;
-      phone:string;
-      gender:string;
-      wallet_id: string;
+      id: string ;
+      email: string ;
+      role: string ;
+      name: string ;
+      phone:string ;
+      gender:string ;
+      wallet_id: string ;
       wallet: {
-        balance: number;
-      };
-      entity: {
-        id: string;
+        balance: number ;
+      } ;
+      entity : {
+        id: string ;
       }
-      avatarUrl: string;
-      roleId: number;
-      access_token: string;
-      refresh_token: string;
-      emailVerified?: Date | null;
-    };
+      avatarUrl: string ;
+      roleId: number ;
+      access_token: string ;
+      refresh_token: string ;
+      emailVerified?: Date | null ;
+    } ;
   }
 }

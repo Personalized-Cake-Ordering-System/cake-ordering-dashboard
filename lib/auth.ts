@@ -1,5 +1,4 @@
 import { auth } from "@/lib/next-auth/auth";
-import { UserRole } from "@/lib/enums/user-role-enum";
 
 export async function getCurrentUser() {
   try {

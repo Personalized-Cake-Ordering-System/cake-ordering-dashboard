@@ -1,122 +1,122 @@
-import axios from "axios";
-import NextAuth, { NextAuthConfig } from "next-auth";
-import { JWT } from "next-auth/jwt";
-import CredentialsProvider from "next-auth/providers/credentials";
-import GoogleProvider from "next-auth/providers/google";
-import { apiRequest } from "../api/api-handler/generic";
+import axios from "axios" ;
+import NextAuth , { NextAuthConfig } from "next-auth" ;
+import { JWT } from "next-auth/jwt" ;
+import CredentialsProvider from "next-auth/providers/credentials" ;
+import GoogleProvider from "next-auth/providers/google" ;
+import { apiRequest } from "../api/api-handler/generic" ;
 
 interface UserJWT extends JWT {
-  id: string;
-  email: string;
-  role: string;
-  name: string;
-  phone: string;
-  gender: string;
-  wallet_id: string;
+  id: string ;
+  email: string ;
+  role: string ;
+  name: string ;
+  phone: string ;
+  gender: string ;
+  wallet_id: string ;
   wallet: {
-    balance: number;
-  };
+    balance: number ;
+  } ;
   entity: {
-    id: string;
+    id: string ;
   }
-  avatarUrl: string;
-  roleId: number;
-  access_token: string;
-  refresh_token: string;
-  emailVerified: Date | null;
+  avatarUrl: string ;
+  roleId: number ;
+  access_token: string ;
+  refresh_token: string ;
+  emailVerified: Date | null ;
 }
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const API_URL = process.env.NEXT_PUBLIC_API_URL ;
 
 export const authOptions: NextAuthConfig = {
   session: {
-    strategy: "jwt",
-    maxAge: 30 * 24 * 60 * 60, // 30 days
-  },
+    strategy: "jwt" ,
+    maxAge: 30 * 24 * 60 * 60 , // 30 days
+  } ,
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-    }),
+      clientId: process.env.GOOGLE_CLIENT_ID! ,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET! ,
+    }) ,
     CredentialsProvider({
-      name: "Credentials",
+      name: "Credentials" ,
       credentials: {
-        email: { label: "Email", type: "text", placeholder: "jsmith" },
-        password: { label: "Password", type: "password" },
-      },
+        email: { label: "Email" , type: "text" , placeholder: "jsmith" } ,
+        password: { label: "Password" , type: "password" } ,
+      } ,
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
-          throw new Error("Email and password are required");
+          throw new Error("Email and password are required") ;
         }
 
         try {
-          const result = await apiRequest<{ payload: any, meta_data: any }>(() =>
-            axios.post(`${API_URL}/auths`, {
-              email: credentials.email,
-              password: credentials.password,
+          const result = await apiRequest<{ payload: any , meta_data: any }>(() =>
+            axios.post(`${API_URL}/auths` , {
+              email: credentials.email ,
+              password: credentials.password ,
             })
-          );
+          ) ;
 
           if (result.success) {
-            const { payload, meta_data } = result.data;
-            return { ...payload, ...meta_data };
+            const { payload , meta_data } = result.data ;
+            return { ...payload , ...meta_data } ;
           }
         } catch (error) {
-          return null;
+          return null ;
         }
-      },
-    }),
-  ],
+      } ,
+    }) ,
+  ] ,
   callbacks: {
-    async jwt({ token, user, trigger, session }) {
+    async jwt({ token , user , trigger , session }) {
       if (trigger === "update") {
-        return { ...token, ...session.user };
+        return { ...token , ...session.user } ;
       }
-      return { ...token, ...user };
-    },
-    async session({ session, token }) {
-      session.user = token as UserJWT;
+      return { ...token , ...user } ;
+    } ,
+    async session({ session , token }) {
+      session.user = token as UserJWT ;
       if (token) {
         const {
-          id,
-          email,
-          role,
-          name,
-          phone,
-          gender,
-          wallet_id,
-          wallet,
-          avatarUrl,
-          roleId,
-          access_token  ,
-          refresh_token,
-        } = token;
-        Object.assign(session.user, {
-          id,
-          email,
-          role,
-          name,
-          phone,
-          gender,
-          wallet_id,
-          wallet,
-          avatarUrl,
-          roleId,
-          access_token,
-          refresh_token,
-        });
+          id ,
+          email ,
+          role ,
+          name ,
+          phone ,
+          gender ,
+          wallet_id ,
+          wallet ,
+          avatarUrl ,
+          roleId ,
+          access_token   ,
+          refresh_token ,
+        } = token ;
+        Object.assign(session.user , {
+          id ,
+          email ,
+          role ,
+          name ,
+          phone ,
+          gender ,
+          wallet_id ,
+          wallet ,
+          avatarUrl ,
+          roleId ,
+          access_token ,
+          refresh_token ,
+        }) ;
       }
-      return session;
-    },
-  },
-  pages: { signIn: "/" },
-  secret: process.env.NEXTAUTH_SECRET!,
-};
+      return session ;
+    } ,
+  } ,
+  pages: { signIn: "/" } ,
+  secret: process.env.NEXTAUTH_SECRET! ,
+} ;
 
 export const {
-  handlers,
-  auth,
-  signIn,
-  signOut,
-  unstable_update: update,
-} = NextAuth(authOptions);
+  handlers ,
+  auth ,
+  signIn ,
+  signOut ,
+  unstable_update: update ,
+} = NextAuth(authOptions) ;
