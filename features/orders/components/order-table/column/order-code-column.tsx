@@ -1,7 +1,6 @@
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { IOrder } from "@/features/orders/types/order-type";
 import { Row, type Column } from "@tanstack/react-table";
-import { cn } from "@/lib/utils";
 import { ShoppingCart, Palette } from "lucide-react";
 
 export const orderCodeColumn = {
@@ -11,56 +10,34 @@ export const orderCodeColumn = {
   ),
   cell: ({ row }: { row: Row<IOrder> }) => {
     const order = row.original;
-    const orderCode = (row.getValue("order_code") as string) || "N/A";
-
-    // Debugging info
+    const orderCode = order.order_code || "N/A";
+    
+    // Kiểm tra nếu là đơn hàng custom dựa vào order_details
     const hasOrderDetails = Boolean(
       order?.order_details && Array.isArray(order.order_details)
     );
-    const orderDetailsLength = hasOrderDetails ? order.order_details.length : 0;
-
-    // Inspect order details more closely
-    let orderDetailsInfo = "No details";
-    let customOrderFound = false;
-
-    if (hasOrderDetails && orderDetailsLength > 0) {
-      orderDetailsInfo = order.order_details
-        .map((detail, index) => {
-          const availableCakeValue = detail
-            ? detail.available_cake === null
-              ? "null"
-              : detail.available_cake === undefined
-              ? "undefined"
-              : JSON.stringify(detail.available_cake)
-            : "detail is null";
-
-          if (detail && detail.available_cake === null) {
-            customOrderFound = true;
-          }
-
-          return `Detail ${index}: available_cake = ${availableCakeValue}`;
-        })
-        .join(", ");
+    
+    let isCustomOrder = false;
+    if (hasOrderDetails && order.order_details.length > 0) {
+      // Đơn hàng được coi là custom nếu có ít nhất một order detail với custom_cake_id
+      isCustomOrder = order.order_details.some(
+        (detail) => detail.custom_cake_id && detail.available_cake === null
+      );
     }
 
-
-
-    // This is what we will use for displaying
-    const isCustomOrder = customOrderFound;
-
     return (
-      <div className="flex items-center gap-2 min-w-[180px]">
+      <div className="flex items-center space-x-2">
         {isCustomOrder ? (
           <>
-            <Palette className="w-5 h-5 text-pink-600 dark:text-pink-400" />
-            <span className="font-medium text-sm  text-pink-800  dark:text-pink-300 px-2 py-1 rounded-md">
-              {orderCode} (Custom)
+            <Palette className="w-4 h-4 text-pink-500" />
+            <span className="font-medium text-gray-900 dark:text-gray-100">
+              {orderCode}
             </span>
           </>
         ) : (
           <>
-            <ShoppingCart className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-            <span className="font-medium text-sm  text-blue-800  dark:text-blue-300 px-2 py-1 rounded-md">
+            <ShoppingCart className="w-4 h-4 text-blue-500" />
+            <span className="font-medium text-gray-900 dark:text-gray-100">
               {orderCode}
             </span>
           </>

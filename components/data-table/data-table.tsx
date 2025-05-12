@@ -55,20 +55,29 @@ export function DataTable<TData, TValue>({
         columnLabels={columnLabels}
         newRowLink={newRowLink}
       />
-   <div className="rounded-lg border border-green-200 dark:border-green-800 shadow-md overflow-hidden">
+      <div className="rounded-lg border border-green-100 dark:border-green-900 shadow-sm overflow-hidden">
         <div className="overflow-auto">
-          <Table className="w-full">
-          <TableHeader className="bg-green-50 dark:bg-green-900/30 sticky top-0 z-4">
+          <Table className="w-full border-collapse">
+            <TableHeader className="bg-green-50 dark:bg-green-950 sticky top-0 z-10">
               {dataTable.getHeaderGroups().map((headerGroup) => (
                 <TableRow
                   key={headerGroup.id}
-                  className="border-b border-gray-200 dark:border-gray-700"
+                  className="border-b border-green-200 dark:border-green-800"
                 >
                   {headerGroup.headers.map((header) => (
                     <TableHead
                       key={header.id}
-                      className="text-gray-900 dark:text-gray-100 font-bold"
+                      className="h-10 px-4 text-left align-middle font-medium text-green-700 dark:text-green-300 text-[13px] tracking-wide"
                       style={{
+                        width: header.column.id === "select" ? "40px" : 
+                              header.column.id === "order_code" ? "180px" : 
+                              header.column.id === "order_status" ? "150px" : 
+                              header.column.id === "order_date" ? "120px" : 
+                              header.column.id === "customer_id" ? "160px" : 
+                              header.column.id === "order_total" ? "120px" : 
+                              header.column.id === "payment_type" ? "150px" : 
+                              header.column.id === "shipping_address" ? "200px" : 
+                              header.column.id === "actions" ? "100px" : "auto"
                       }}
                     >
                       {header.isPlaceholder
@@ -88,17 +97,27 @@ export function DataTable<TData, TValue>({
                   <TableRow
                     key={row.id}
                     data-state={row.getIsSelected() && "selected"}
-                   className="hover:bg-green-100 dark:hover:bg-green-800/50"
+                    className={`
+                      border-b border-green-100 dark:border-green-900
+                      ${index % 2 === 0 ? 'bg-white dark:bg-gray-950' : 'bg-green-50/40 dark:bg-green-950/40'}
+                      hover:bg-green-100/50 dark:hover:bg-green-900/30
+                      ${row.getIsSelected() ? 'bg-green-100 dark:bg-green-900/50 hover:bg-green-100 dark:hover:bg-green-900/50' : ''}
+                    `}
                   >
                     {row.getVisibleCells().map((cell) => (
                       <TableCell
                         key={cell.id}
-                        className="text-gray-800 dark:text-gray-200 font-semibold"
+                        className="p-3 text-sm align-middle"
                         style={{
-                          minWidth:
-                            cell.column.id === "name" ? "50px" : "20px",
-                          maxWidth:
-                            cell.column.id === "name" ? "250px" : "150px",
+                          width: cell.column.id === "select" ? "40px" : 
+                                cell.column.id === "order_code" ? "180px" : 
+                                cell.column.id === "order_status" ? "150px" : 
+                                cell.column.id === "order_date" ? "120px" : 
+                                cell.column.id === "customer_id" ? "160px" : 
+                                cell.column.id === "order_total" ? "120px" : 
+                                cell.column.id === "payment_type" ? "150px" : 
+                                cell.column.id === "shipping_address" ? "200px" : 
+                                cell.column.id === "actions" ? "100px" : "auto"
                         }}
                       >
                         {flexRender(

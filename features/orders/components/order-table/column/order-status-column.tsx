@@ -23,73 +23,73 @@ export const orderStatusColumn = {
       switch (status.toUpperCase()) {
         case "PENDING":
           return {
-            label: "Chờ thanh toán",
-            bgColor: "bg-amber-100 dark:bg-amber-900/30",
-            textColor: "text-amber-700 dark:text-amber-400",
+            label: "Chờ xử lý",
+            bgColor: "bg-yellow-500",
+            textColor: "text-white",
           };
         case "PROCESSING":
           return {
             label: "Đang xử lý",
-            bgColor: "bg-blue-100 dark:bg-blue-900/30",
-            textColor: "text-blue-700 dark:text-blue-400",
+            bgColor: "bg-blue-500",
+            textColor: "text-white",
           };
         case "COMPLETED":
         case "HOÀN THÀNH":
           return {
             label: "Hoàn thành",
-            bgColor: "bg-green-500 dark:bg-green-600",
+            bgColor: "bg-green-500",
             textColor: "text-white",
           };
         case "CANCELLED":
         case "CANCELED":
           return {
             label: "Đã hủy",
-            bgColor: "bg-red-100 dark:bg-red-900/30",
-            textColor: "text-red-700 dark:text-red-400",
+            bgColor: "bg-red-500",
+            textColor: "text-white",
           };
         case "DELIVERING":
         case "SHIPPING":
           return {
-            label: "Vận chuyển",
-            bgColor: "bg-purple-100 dark:bg-purple-900/30",
-            textColor: "text-purple-700 dark:text-purple-400",
+            label: "Đang giao",
+            bgColor: "bg-purple-500",
+            textColor: "text-white",
           };
         case "SHIPPING_COMPLETED":
           return {
             label: "Giao hàng hoàn tất",
-            bgColor: "bg-emerald-100 dark:bg-emerald-900/30",
-            textColor: "text-emerald-700 dark:text-emerald-400",
+            bgColor: "bg-emerald-500",
+            textColor: "text-white",
           };
         case "REPORT_PENDING":
           return {
             label: "Khiếu nại đang xử lý",
-            bgColor: "bg-yellow-100 dark:bg-yellow-900/30",
-            textColor: "text-yellow-700 dark:text-yellow-400",
+            bgColor: "bg-yellow-500",
+            textColor: "text-white",
           };
         case "FAULTY":
           return {
             label: "Đơn hàng lỗi",
-            bgColor: "bg-red-100 dark:bg-red-900/30",
-            textColor: "text-red-700 dark:text-red-400",
+            bgColor: "bg-red-500",
+            textColor: "text-white",
           };
         case "READY_FOR_PICKUP":
           return {
-            label: "Sẵn sàng giao",
-            bgColor: "bg-indigo-100 dark:bg-indigo-900/30",
-            textColor: "text-indigo-700 dark:text-indigo-400",
+            label: "Sẵn sàng nhận",
+            bgColor: "bg-indigo-500",
+            textColor: "text-white",
           };
         case "WAITING_BAKERY_CONFIRM":
           return {
             label: "Đợi xác nhận",
-            bgColor: "bg-cyan-100 dark:bg-cyan-800/50",
-            textColor: "text-cyan-800 dark:text-cyan-200",
+            bgColor: "bg-cyan-500",
+            textColor: "text-white",
           };
         default:
           // For any other value, just use the value directly
           return {
             label: status,
-            bgColor: "bg-gray-100 dark:bg-gray-800",
-            textColor: "text-gray-700 dark:text-gray-300",
+            bgColor: "bg-gray-500",
+            textColor: "text-white",
           };
       }
     };
@@ -101,10 +101,10 @@ export const orderStatusColumn = {
     const statusInfo = getStatusInfo(status);
 
     return (
-      <div className="flex min-w-[200px] max-w-[250px]">
+      <div className="flex">
         <span
           className={cn(
-            "px-2 py-1 rounded-md text-xs font-medium whitespace-nowrap",
+            "px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap",
             statusInfo.bgColor,
             statusInfo.textColor
           )}

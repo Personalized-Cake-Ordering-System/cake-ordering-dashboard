@@ -20,6 +20,8 @@ import { useFeatureFlagsStore } from "@/hooks/use-feature-flag";
 // import { TasksTableFloatingBar } from "@/components/data-table/custom-table/data-table-floating-bar";
 import { getOrders } from "../../actions/order-action";
 import { IOrder } from "../../types/order-type";
+import { Button } from "@/components/ui/button";
+import { Download, Filter, RefreshCw } from "lucide-react";
 
 interface OrderTableProps {
   orderPromise: ReturnType<typeof getOrders>;
@@ -92,11 +94,36 @@ export function OrderTable({ orderPromise }: OrderTableProps) {
 
   return (
     <div className="h-full flex flex-col">
+      <div className="flex items-center justify-between px-6 py-3 border-b border-green-100 dark:border-green-800">
+        <div className="flex gap-2">
+          <Button 
+            variant="outline" 
+            size="sm" 
+            className="border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-900/50 text-green-700 dark:text-green-300 hover:bg-green-100 dark:hover:bg-green-800"
+          >
+            <Filter className="h-4 w-4 mr-2" />
+            Lọc nâng cao
+          </Button>
+          <Button 
+            variant="outline" 
+            size="sm" 
+            className="border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-900/50 text-green-700 dark:text-green-300 hover:bg-green-100 dark:hover:bg-green-800"
+          >
+            <RefreshCw className="h-4 w-4 mr-2" />
+            Làm mới
+          </Button>
+        </div>
+        <Button 
+          variant="outline" 
+          size="sm" 
+          className="border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-900/50 text-green-700 dark:text-green-300 hover:bg-green-100 dark:hover:bg-green-800"
+        >
+          <Download className="h-4 w-4 mr-2" />
+          Xuất Excel
+        </Button>
+      </div>
       <DataTable
         dataTable={dataTable}
-        // floatingBarContent={
-        //   enableFloatingBar ? <TasksTableFloatingBar table={dataTable} /> : null
-        // }
         columns={columns}
         searchableColumns={searchableColumns}
         filterableColumns={filterableColumns}
