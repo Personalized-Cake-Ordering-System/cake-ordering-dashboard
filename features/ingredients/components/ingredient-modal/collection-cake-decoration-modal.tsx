@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useTransition } from "react";
+import React, { useEffect, useState, useTransition, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -141,6 +141,11 @@ const CollectionCakeDecorationModal = () => {
     },
   });
 
+  // Memoize the current item to prevent unnecessary rerenders
+  const currentItem = useMemo(() => {
+    return decorationItems[currentItemIndex];
+  }, [decorationItems, currentItemIndex]);
+
   // Create a new empty decoration item
   const createEmptyItem = () => {
     // Kiểm tra data.ingredientType có tồn tại không
@@ -180,7 +185,15 @@ const CollectionCakeDecorationModal = () => {
         fetchImage(currentItem.image_id);
       }
     }
-  }, [currentItemIndex, decorationItems]);
+  }, [currentItemIndex]);
+
+  // Track image_id changes separately to avoid unnecessary fetches
+  useEffect(() => {
+    const currentItem = decorationItems[currentItemIndex];
+    if (currentItem?.image_id) {
+      fetchImage(currentItem.image_id);
+    }
+  }, [currentItemIndex, decorationItems[currentItemIndex]?.image_id]);
 
   // Fetch image function
   const fetchImage = async (imageId: string) => {
@@ -434,8 +447,6 @@ const CollectionCakeDecorationModal = () => {
   };
 
   const renderItemForm = () => {
-    const currentItem = decorationItems[currentItemIndex];
-
     if (!currentItem) {
       return (
         <div className="flex justify-center items-center p-2">
