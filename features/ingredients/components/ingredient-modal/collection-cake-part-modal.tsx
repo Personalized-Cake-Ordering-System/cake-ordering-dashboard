@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useTransition } from "react";
+import React, { useEffect, useState, useTransition, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -128,6 +128,11 @@ const CollectionCakePartModal = () => {
     },
   });
 
+  // Memoize the current item to prevent unnecessary rerenders
+  const currentItem = useMemo(() => {
+    return partItems[currentItemIndex];
+  }, [partItems, currentItemIndex]);
+
   // Create a new empty part item
   const createEmptyItem = () => {
     // Use ingredient type if provided in data
@@ -166,7 +171,15 @@ const CollectionCakePartModal = () => {
         fetchImage(currentItem.image_id);
       }
     }
-  }, [currentItemIndex, partItems]);
+  }, [currentItemIndex]);
+
+  // Track image_id changes separately to avoid unnecessary fetches
+  useEffect(() => {
+    const currentItem = partItems[currentItemIndex];
+    if (currentItem?.image_id) {
+      fetchImage(currentItem.image_id);
+    }
+  }, [currentItemIndex, partItems[currentItemIndex]?.image_id]);
 
   // Fetch image function
   const fetchImage = async (imageId: string) => {
@@ -413,8 +426,6 @@ const CollectionCakePartModal = () => {
   };
 
   const renderItemForm = () => {
-    const currentItem = partItems[currentItemIndex];
-
     if (!currentItem) {
       return (
         <div className="flex justify-center items-center p-4">

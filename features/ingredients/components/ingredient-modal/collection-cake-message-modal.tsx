@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useTransition } from "react";
+import React, { useEffect, useState, useTransition, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -312,9 +312,12 @@ const CollectionCakeMessageModal = () => {
     setCurrentItemValidated(false);
   };
 
-  const renderItemForm = () => {
-    const currentItem = messageItems[currentItemIndex];
+  // Memoize the current item to prevent unnecessary rerenders
+  const currentItem = useMemo(() => {
+    return messageItems[currentItemIndex];
+  }, [messageItems, currentItemIndex]);
 
+  const renderItemForm = () => {
     if (!currentItem) {
       return (
         <div className="flex justify-center items-center p-8">

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useTransition } from "react";
+import React, { useEffect, useState, useTransition, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -129,6 +129,11 @@ const CollectionCakeExtraModal = () => {
     },
   });
 
+  // Memoize the current item to prevent unnecessary rerenders
+  const currentItem = useMemo(() => {
+    return extraItems[currentItemIndex];
+  }, [extraItems, currentItemIndex]);
+
   // Create a new empty extra item
   const createEmptyItem = () => {
     // Kiểm tra data.ingredientType có tồn tại không
@@ -168,7 +173,15 @@ const CollectionCakeExtraModal = () => {
         fetchImage(currentItem.image_id);
       }
     }
-  }, [currentItemIndex, extraItems]);
+  }, [currentItemIndex]);
+
+  // Track image_id changes separately to avoid unnecessary fetches
+  useEffect(() => {
+    const currentItem = extraItems[currentItemIndex];
+    if (currentItem?.image_id) {
+      fetchImage(currentItem.image_id);
+    }
+  }, [currentItemIndex, extraItems[currentItemIndex]?.image_id]);
 
   // Fetch image function
   const fetchImage = async (imageId: string) => {
@@ -418,8 +431,6 @@ const CollectionCakeExtraModal = () => {
   };
 
   const renderItemForm = () => {
-    const currentItem = extraItems[currentItemIndex];
-
     if (!currentItem) {
       return (
         <div className="flex justify-center items-center p-4">
