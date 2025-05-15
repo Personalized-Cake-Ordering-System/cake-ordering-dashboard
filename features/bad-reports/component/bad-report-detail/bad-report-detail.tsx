@@ -201,25 +201,34 @@ const BadReportDetail = ({ report }: BadReportDetailProps) => {
       <div className="mb-8">
         <div className="relative w-full h-52 sm:h-60 md:h-64 rounded-xl overflow-hidden shadow-xl border border-white/10">
           <div className="absolute inset-0 bg-gradient-to-br from-black/90 via-black/50 to-black/30"></div>
-          <div className={`absolute inset-0 ${statusInfo.bgColor} opacity-20`}></div>
+          <div
+            className={`absolute inset-0 ${statusInfo.bgColor} opacity-20`}
+          ></div>
           <div className="absolute inset-0 bg-[url('/images/pattern-bg.png')] opacity-10 bg-repeat"></div>
-          
+
           {/* Animated Background Accent */}
           <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-white to-transparent opacity-40 animate-pulse"></div>
           <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-primary/40 via-primary/80 to-primary/40 opacity-80"></div>
-          
+
           {/* Decorative Elements */}
           <div className="absolute top-1/4 right-1/4 w-32 h-32 rounded-full bg-gradient-to-br from-primary/20 to-transparent blur-xl opacity-30"></div>
           <div className="absolute bottom-1/3 left-1/3 w-24 h-24 rounded-full bg-gradient-to-tr from-blue-500/20 to-transparent blur-xl opacity-30"></div>
-          
+
           {/* Report Type Badge */}
           <div className="absolute top-5 left-5 z-10">
-            <Badge 
-              variant="outline" 
+            <Badge
+              variant="outline"
               className="py-1.5 px-3 bg-opacity-90 backdrop-blur-md shadow-lg border-0 animate-fadeIn"
               style={{
-                background: `rgba(${reportTypeInfo.textColor === 'text-purple-500' ? '147, 51, 234' : '79, 70, 229'}, 0.15)`,
-                color: reportTypeInfo.textColor === 'text-purple-500' ? 'rgb(147, 51, 234)' : 'rgb(79, 70, 229)'
+                background: `rgba(${
+                  reportTypeInfo.textColor === "text-purple-500"
+                    ? "147, 51, 234"
+                    : "79, 70, 229"
+                }, 0.15)`,
+                color:
+                  reportTypeInfo.textColor === "text-purple-500"
+                    ? "rgb(147, 51, 234)"
+                    : "rgb(79, 70, 229)",
               }}
             >
               <div className="flex items-center gap-1.5">
@@ -232,7 +241,10 @@ const BadReportDetail = ({ report }: BadReportDetailProps) => {
           {/* Report Status */}
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center w-full px-4 z-10">
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 drop-shadow-md tracking-tight">
-              Báo cáo <span className="text-primary-foreground">#{report.id.substring(0, 8)}</span>
+              Báo cáo{" "}
+              <span className="text-primary-foreground">
+                #{report.id.substring(0, 8)}
+              </span>
             </h1>
             <Badge
               variant="outline"
@@ -247,14 +259,14 @@ const BadReportDetail = ({ report }: BadReportDetailProps) => {
                     ? "linear-gradient(135deg, rgba(245, 158, 11, 0.8) 0%, rgba(251, 191, 36, 0.9) 100%)"
                     : "linear-gradient(135deg, rgba(239, 68, 68, 0.8) 0%, rgba(248, 113, 113, 0.9) 100%)",
                 color: "white",
-                backdropFilter: "blur(4px)"
+                backdropFilter: "blur(4px)",
               }}
             >
               {statusInfo.icon}
               <span>{statusInfo.label}</span>
             </Badge>
           </div>
-          
+
           {/* Creation Date */}
           <div className="absolute bottom-4 right-5 text-white/90 text-sm backdrop-blur-md bg-black/30 px-3 py-1.5 rounded-full shadow-md">
             <div className="flex items-center gap-1.5">
@@ -284,8 +296,12 @@ const BadReportDetail = ({ report }: BadReportDetailProps) => {
                     {statusInfo.icon}
                   </div>
                   <div>
-                    <p className="font-medium text-sm text-muted-foreground">Trạng thái hiện tại</p>
-                    <p className={`${statusInfo.textColor} font-semibold text-lg`}>
+                    <p className="font-medium text-sm text-muted-foreground">
+                      Trạng thái hiện tại
+                    </p>
+                    <p
+                      className={`${statusInfo.textColor} font-semibold text-lg`}
+                    >
                       {statusInfo.label}
                     </p>
                   </div>
@@ -293,27 +309,39 @@ const BadReportDetail = ({ report }: BadReportDetailProps) => {
 
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-1 p-3 bg-muted/10 rounded-lg">
-                    <p className="font-medium text-sm text-muted-foreground">Ngày tạo</p>
+                    <p className="font-medium text-sm text-muted-foreground">
+                      Ngày tạo
+                    </p>
                     <div className="flex items-center gap-2">
                       <Calendar className="h-4 w-4 text-primary" />
-                      <span className="font-medium">{formatDate(report.created_at)}</span>
+                      <span className="font-medium">
+                        {formatDate(report.created_at)}
+                      </span>
                     </div>
                   </div>
 
                   {report.updated_at ? (
                     <div className="space-y-1 p-3 bg-muted/10 rounded-lg">
-                      <p className="font-medium text-sm text-muted-foreground">Cập nhật lần cuối</p>
+                      <p className="font-medium text-sm text-muted-foreground">
+                        Cập nhật lần cuối
+                      </p>
                       <div className="flex items-center gap-2">
                         <Clock className="h-4 w-4 text-primary" />
-                        <span className="font-medium">{formatDate(report.updated_at)}</span>
+                        <span className="font-medium">
+                          {formatDate(report.updated_at)}
+                        </span>
                       </div>
                     </div>
                   ) : (
                     <div className="space-y-1 p-3 bg-muted/10 rounded-lg">
-                      <p className="font-medium text-sm text-muted-foreground">ID Báo cáo</p>
+                      <p className="font-medium text-sm text-muted-foreground">
+                        ID Báo cáo
+                      </p>
                       <div className="flex items-center gap-2">
                         <FileText className="h-4 w-4 text-primary" />
-                        <span className="font-medium truncate">{report.id.substring(0, 10)}...</span>
+                        <span className="font-medium truncate">
+                          {report.id.substring(0, 10)}...
+                        </span>
                       </div>
                     </div>
                   )}
@@ -344,7 +372,9 @@ const BadReportDetail = ({ report }: BadReportDetailProps) => {
                         ) : (
                           <Clock className="mr-2 h-4 w-4" />
                         )}
-                        {loadingAction === "approve" && isPending ? "Đang xử lý" : "Bắt đầu xử lý"}
+                        {loadingAction === "approve" && isPending
+                          ? "Đang xử lý"
+                          : "Bắt đầu xử lý"}
                       </Button>
                       <Button
                         className="w-full"
@@ -362,7 +392,9 @@ const BadReportDetail = ({ report }: BadReportDetailProps) => {
                         ) : (
                           <X className="mr-2 h-4 w-4" />
                         )}
-                        {loadingAction === "reject" && isPending ? "Đang xử lý" : "Từ chối"}
+                        {loadingAction === "reject" && isPending
+                          ? "Đang xử lý"
+                          : "Từ chối"}
                       </Button>
                     </div>
                   )}
@@ -378,18 +410,6 @@ const BadReportDetail = ({ report }: BadReportDetailProps) => {
                         <Check className="h-4 w-4" />
                         <span>Đánh dấu đã giải quyết</span>
                       </span>
-                    </Button>
-                  )}
-
-                  {(report.status === "RESOLVED" ||
-                    report.status === "REJECTED" ||
-                    report.status === "ACCEPTED") && (
-                    <Button 
-                      className="w-full"
-                      variant="outline"
-                    >
-                      <Clock className="mr-2 h-4 w-4" />
-                      Mở lại báo cáo
                     </Button>
                   )}
                 </div>
@@ -422,7 +442,10 @@ const BadReportDetail = ({ report }: BadReportDetailProps) => {
               icon={<Store className="h-5 w-5" />}
               title="Tiệm bánh liên quan"
               value={report.bakery.bakery_name}
-              description={`Địa chỉ: ${report.bakery.address.substring(0, 30)}...`}
+              description={`Địa chỉ: ${report.bakery.address.substring(
+                0,
+                30
+              )}...`}
               bgColor="bg-emerald-50"
               iconColor="text-emerald-500"
             />
@@ -480,12 +503,17 @@ const BadReportDetail = ({ report }: BadReportDetailProps) => {
                       </h3>
 
                       <div className="p-5 border rounded-lg bg-muted/10 hover:bg-muted/20 transition-colors duration-300 shadow-sm">
-                        <p className="whitespace-pre-line text-pretty">{report.content}</p>
+                        <p className="whitespace-pre-line text-pretty">
+                          {report.content}
+                        </p>
                       </div>
                     </div>
 
                     {/* Customer Information */}
-                    <div className="animate-fadeIn p-6 bg-muted/5" style={{ animationDelay: '100ms' }}>
+                    <div
+                      className="animate-fadeIn p-6 bg-muted/5"
+                      style={{ animationDelay: "100ms" }}
+                    >
                       <h3 className="text-base font-medium mb-4 flex items-center gap-2 text-primary/90">
                         <User className="h-4 w-4 text-primary" />
                         Thông tin người báo cáo
@@ -518,13 +546,18 @@ const BadReportDetail = ({ report }: BadReportDetailProps) => {
                           label="Địa chỉ"
                           value={report.customer.address}
                           copyable={true}
-                          onCopy={() => copyToClipboard(report.customer.address)}
+                          onCopy={() =>
+                            copyToClipboard(report.customer.address)
+                          }
                         />
                       </div>
                     </div>
 
                     {/* Bakery Information */}
-                    <div className="animate-fadeIn p-6" style={{ animationDelay: '200ms' }}>
+                    <div
+                      className="animate-fadeIn p-6"
+                      style={{ animationDelay: "200ms" }}
+                    >
                       <h3 className="text-base font-medium mb-4 flex items-center gap-2 text-primary/90">
                         <Store className="h-4 w-4 text-primary" />
                         Thông tin tiệm bánh
@@ -536,7 +569,9 @@ const BadReportDetail = ({ report }: BadReportDetailProps) => {
                           label="Tên tiệm bánh"
                           value={report.bakery.bakery_name}
                           copyable={true}
-                          onCopy={() => copyToClipboard(report.bakery.bakery_name)}
+                          onCopy={() =>
+                            copyToClipboard(report.bakery.bakery_name)
+                          }
                         />
                         <InfoItem
                           icon={<Phone className="h-4 w-4 text-primary" />}
@@ -565,7 +600,10 @@ const BadReportDetail = ({ report }: BadReportDetailProps) => {
                     {report.order_id && (
                       <>
                         {/* Order Information */}
-                        <div className="animate-fadeIn p-6 bg-muted/5" style={{ animationDelay: '300ms' }}>
+                        <div
+                          className="animate-fadeIn p-6 bg-muted/5"
+                          style={{ animationDelay: "300ms" }}
+                        >
                           <h3 className="text-base font-medium mb-4 flex items-center gap-2 text-primary/90">
                             <Clipboard className="h-4 w-4 text-primary" />
                             Thông tin đơn hàng
@@ -573,13 +611,17 @@ const BadReportDetail = ({ report }: BadReportDetailProps) => {
 
                           <div className="space-y-5">
                             <InfoItem
-                              icon={<Clipboard className="h-4 w-4 text-primary" />}
+                              icon={
+                                <Clipboard className="h-4 w-4 text-primary" />
+                              }
                               label="Mã đơn hàng"
                               value={report.order_id}
                               copyable={true}
-                              onCopy={() => copyToClipboard(report.order_id || "")}
+                              onCopy={() =>
+                                copyToClipboard(report.order_id || "")
+                              }
                             />
-                            
+
                             {report.order && (
                               <>
                                 {/* Order Summary Box */}
@@ -589,109 +631,177 @@ const BadReportDetail = ({ report }: BadReportDetailProps) => {
                                       <DollarSign className="h-4 w-4 text-primary" />
                                       <span>Tổng quan đơn hàng</span>
                                     </h4>
-                                    <Badge 
+                                    <Badge
                                       variant="outline"
                                       className={`py-1 px-3 ${
-                                        report.order.order_status === "COMPLETED" 
-                                          ? "bg-green-100 text-green-800" 
-                                          : report.order.order_status === "CANCELED" 
-                                          ? "bg-red-100 text-red-800" 
-                                          : report.order.order_status === "REPORT_PENDING"
+                                        report.order.order_status ===
+                                        "COMPLETED"
+                                          ? "bg-green-100 text-green-800"
+                                          : report.order.order_status ===
+                                            "CANCELED"
+                                          ? "bg-red-100 text-red-800"
+                                          : report.order.order_status ===
+                                            "REPORT_PENDING"
                                           ? "bg-yellow-100 text-yellow-800"
                                           : "bg-blue-100 text-blue-800"
                                       }`}
                                     >
-                                      {report.order.order_status === "COMPLETED" 
-                                        ? "Đã hoàn thành" 
-                                        : report.order.order_status === "CANCELED" 
-                                        ? "Đã hủy" 
-                                        : report.order.order_status === "REPORT_PENDING"
+                                      {report.order.order_status === "COMPLETED"
+                                        ? "Đã hoàn thành"
+                                        : report.order.order_status ===
+                                          "CANCELED"
+                                        ? "Đã hủy"
+                                        : report.order.order_status ===
+                                          "REPORT_PENDING"
                                         ? "Đang chờ xử lý báo cáo"
                                         : report.order.order_status}
                                     </Badge>
                                   </div>
-                                  
+
                                   <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-3">
                                     <div className="p-2 bg-primary/5 rounded-md text-center">
-                                      <p className="text-xs text-muted-foreground">Giá trị đơn hàng</p>
-                                      <p className="font-medium">{report.order.total_product_price.toLocaleString('vi-VN')}đ</p>
+                                      <p className="text-xs text-muted-foreground">
+                                        Giá trị đơn hàng
+                                      </p>
+                                      <p className="font-medium">
+                                        {report.order.total_product_price.toLocaleString(
+                                          "vi-VN"
+                                        )}
+                                        đ
+                                      </p>
                                     </div>
                                     <div className="p-2 bg-primary/5 rounded-md text-center">
-                                      <p className="text-xs text-muted-foreground">Phí vận chuyển</p>
-                                      <p className="font-medium">{report.order.shipping_fee.toLocaleString('vi-VN')}đ</p>
+                                      <p className="text-xs text-muted-foreground">
+                                        Phí vận chuyển
+                                      </p>
+                                      <p className="font-medium">
+                                        {report.order.shipping_fee.toLocaleString(
+                                          "vi-VN"
+                                        )}
+                                        đ
+                                      </p>
                                     </div>
                                     <div className="p-2 bg-primary/5 rounded-md text-center">
-                                      <p className="text-xs text-muted-foreground">Khoảng cách</p>
-                                      <p className="font-medium">{report.order.shipping_distance.toFixed(1)}km</p>
+                                      <p className="text-xs text-muted-foreground">
+                                        Khoảng cách
+                                      </p>
+                                      <p className="font-medium">
+                                        {report.order.shipping_distance.toFixed(
+                                          1
+                                        )}
+                                        km
+                                      </p>
                                     </div>
                                     <div className="p-2 bg-primary/5 rounded-md text-center">
-                                      <p className="text-xs text-muted-foreground">Tổng thanh toán</p>
-                                      <p className="font-medium text-primary">{report.order.total_customer_paid.toLocaleString('vi-VN')}đ</p>
+                                      <p className="text-xs text-muted-foreground">
+                                        Tổng thanh toán
+                                      </p>
+                                      <p className="font-medium text-primary">
+                                        {report.order.total_customer_paid.toLocaleString(
+                                          "vi-VN"
+                                        )}
+                                        đ
+                                      </p>
                                     </div>
                                   </div>
-                                  
-                                  {report.order.order_status === "REPORT_PENDING" && (
+
+                                  {report.order.order_status ===
+                                    "REPORT_PENDING" && (
                                     <div className="mt-3 p-3 bg-yellow-50 border border-yellow-200 rounded-md">
                                       <div className="flex items-start gap-2">
                                         <AlertCircle className="h-4 w-4 text-yellow-500 mt-0.5" />
                                         <div>
-                                          <h4 className="font-medium text-yellow-700 mb-1">Đơn hàng đang trong trạng thái báo cáo</h4>
-                                          <p className="text-yellow-600 text-sm">Đơn hàng này đã bị khách hàng báo cáo và đang chờ xử lý.</p>
+                                          <h4 className="font-medium text-yellow-700 mb-1">
+                                            Đơn hàng đang trong trạng thái báo
+                                            cáo
+                                          </h4>
+                                          <p className="text-yellow-600 text-sm">
+                                            Đơn hàng này đã bị khách hàng báo
+                                            cáo và đang chờ xử lý.
+                                          </p>
                                         </div>
                                       </div>
                                     </div>
                                   )}
                                 </div>
-                                
+
                                 {/* Order Details in Tabs */}
                                 <div className="border rounded-lg overflow-hidden">
                                   <div className="flex border-b">
                                     <button
                                       className={`py-2 px-4 font-medium text-sm ${
-                                        true ? "border-b-2 border-primary" : "text-muted-foreground"
+                                        true
+                                          ? "border-b-2 border-primary"
+                                          : "text-muted-foreground"
                                       }`}
                                     >
                                       Chi tiết đơn hàng
                                     </button>
                                   </div>
-                                  
+
                                   <div className="p-4">
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                                       <InfoItem
-                                        icon={<MapPin className="h-4 w-4 text-primary" />}
+                                        icon={
+                                          <MapPin className="h-4 w-4 text-primary" />
+                                        }
                                         label="Địa chỉ giao hàng"
                                         value={report.order.shipping_address}
                                         copyable={true}
-                                        onCopy={() => copyToClipboard(report.order.shipping_address)}
+                                        onCopy={() =>
+                                          copyToClipboard(
+                                            report.order.shipping_address
+                                          )
+                                        }
                                       />
-                                      
+
                                       <InfoItem
-                                        icon={<Phone className="h-4 w-4 text-primary" />}
+                                        icon={
+                                          <Phone className="h-4 w-4 text-primary" />
+                                        }
                                         label="Số điện thoại đặt hàng"
                                         value={report.order.phone_number}
                                         copyable={true}
-                                        onCopy={() => copyToClipboard(report.order.phone_number)}
+                                        onCopy={() =>
+                                          copyToClipboard(
+                                            report.order.phone_number
+                                          )
+                                        }
                                       />
                                     </div>
-                                    
+
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                       <InfoItem
-                                        icon={<Clock className="h-4 w-4 text-primary" />}
+                                        icon={
+                                          <Clock className="h-4 w-4 text-primary" />
+                                        }
                                         label="Thời gian đặt hàng"
-                                        value={formatDate(report.order.created_at)}
+                                        value={formatDate(
+                                          report.order.created_at
+                                        )}
                                         copyable={false}
                                         onCopy={() => {}}
                                       />
-                                      
+
                                       <InfoItem
-                                        icon={<DollarSign className="h-4 w-4 text-primary" />}
+                                        icon={
+                                          <DollarSign className="h-4 w-4 text-primary" />
+                                        }
                                         label="Phương thức thanh toán"
-                                        value={report.order.payment_type === "QR_CODE" ? "Thanh toán QR Code" : report.order.payment_type === "CASH" ? "Thanh toán tiền mặt" : report.order.payment_type}
+                                        value={
+                                          report.order.payment_type ===
+                                          "QR_CODE"
+                                            ? "Thanh toán QR Code"
+                                            : report.order.payment_type ===
+                                              "CASH"
+                                            ? "Thanh toán tiền mặt"
+                                            : report.order.payment_type
+                                        }
                                         copyable={false}
                                         onCopy={() => {}}
                                       />
                                     </div>
-                                    
+
                                     {report.order.order_note && (
                                       <div className="mt-4">
                                         <h4 className="font-medium mb-2 text-sm flex items-center gap-2">
@@ -705,14 +815,18 @@ const BadReportDetail = ({ report }: BadReportDetailProps) => {
                                     )}
                                   </div>
                                 </div>
-                                
+
                                 <div className="flex justify-end pt-4">
-                                  <Button 
-                                    variant="outline" 
+                                  <Button
+                                    variant="outline"
                                     className="bg-muted/10 hover:bg-muted/30"
                                     asChild
                                   >
-                                    <Link href={`/dashboard/orders/${report.order_id || ''}`}>
+                                    <Link
+                                      href={`/dashboard/orders/${
+                                        report.order_id || ""
+                                      }`}
+                                    >
                                       <Clipboard className="mr-2 h-4 w-4" />
                                       Xem chi tiết đơn hàng
                                       <ExternalLink className="ml-2 h-3.5 w-3.5 opacity-70" />
@@ -743,11 +857,25 @@ const BadReportDetail = ({ report }: BadReportDetailProps) => {
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                       {report.report_files.map((file, index) => {
                         // Type guard to check if file is a string or an object
-                        const fileUrl = typeof file === 'string' ? file : ('file_url' in file ? file.file_url : '');
-                        const fileName = typeof file === 'string' ? `Tài liệu ${index + 1}` : ('file_name' in file ? file.file_name : `Tài liệu ${index + 1}`);
-                        
+                        const fileUrl =
+                          typeof file === "string"
+                            ? file
+                            : "file_url" in file
+                            ? file.file_url
+                            : "";
+                        const fileName =
+                          typeof file === "string"
+                            ? `Tài liệu ${index + 1}`
+                            : "file_name" in file
+                            ? file.file_name
+                            : `Tài liệu ${index + 1}`;
+
                         return (
-                          <Card key={index} className="overflow-hidden animate-fadeIn group hover:shadow-md transition-all duration-300 border border-muted/40 hover:border-primary/20" style={{ animationDelay: `${index * 100}ms` }}>
+                          <Card
+                            key={index}
+                            className="overflow-hidden animate-fadeIn group hover:shadow-md transition-all duration-300 border border-muted/40 hover:border-primary/20"
+                            style={{ animationDelay: `${index * 100}ms` }}
+                          >
                             <div className="relative aspect-video overflow-hidden">
                               <Image
                                 src={fileUrl}
@@ -828,9 +956,13 @@ const BadReportDetail = ({ report }: BadReportDetailProps) => {
             : "Bạn có chắc chắn muốn từ chối báo cáo này?"
         }
         actionLabel={
-          isPending ? 
-            (isApprove ? "Đang xử lý..." : "Đang từ chối...") 
-            : (isApprove ? "Bắt đầu xử lý" : "Từ chối")
+          isPending
+            ? isApprove
+              ? "Đang xử lý..."
+              : "Đang từ chối..."
+            : isApprove
+            ? "Bắt đầu xử lý"
+            : "Từ chối"
         }
         variant={isApprove ? "default" : "destructive"}
       />
@@ -908,20 +1040,32 @@ const TimelineItem = ({
     <div className="flex flex-col items-center mr-4">
       <div className={`${color} rounded-full p-1 w-3 h-3 shadow-md relative`}>
         {/* Pulse effect */}
-        <div className={`absolute inset-0 ${color} rounded-full animate-pulse opacity-70`}></div>
+        <div
+          className={`absolute inset-0 ${color} rounded-full animate-pulse opacity-70`}
+        ></div>
       </div>
       <div className="bg-gradient-to-b from-gray-300 to-gray-100 dark:from-gray-600 dark:to-gray-800 flex-grow w-0.5 my-1"></div>
     </div>
     <div className="bg-muted/30 hover:bg-muted/50 rounded-lg p-4 flex-grow shadow-sm transition-all duration-200 hover:shadow-md">
       <div className="flex justify-between items-start">
         <h4 className="font-medium flex items-center gap-2">
-          {title === "Báo cáo được tạo" && <FileText className="h-3.5 w-3.5 text-green-500" />}
-          {title === "Báo cáo được cập nhật" && <Clock className="h-3.5 w-3.5 text-blue-500" />}
-          {title === "Báo cáo được giải quyết" && <Check className="h-3.5 w-3.5 text-teal-500" />}
-          {title === "Báo cáo bị từ chối" && <X className="h-3.5 w-3.5 text-red-500" />}
+          {title === "Báo cáo được tạo" && (
+            <FileText className="h-3.5 w-3.5 text-green-500" />
+          )}
+          {title === "Báo cáo được cập nhật" && (
+            <Clock className="h-3.5 w-3.5 text-blue-500" />
+          )}
+          {title === "Báo cáo được giải quyết" && (
+            <Check className="h-3.5 w-3.5 text-teal-500" />
+          )}
+          {title === "Báo cáo bị từ chối" && (
+            <X className="h-3.5 w-3.5 text-red-500" />
+          )}
           {title}
         </h4>
-        <span className="text-xs text-muted-foreground bg-background/50 px-2 py-1 rounded-full">{date}</span>
+        <span className="text-xs text-muted-foreground bg-background/50 px-2 py-1 rounded-full">
+          {date}
+        </span>
       </div>
       <p className="text-sm text-muted-foreground mt-1">{description}</p>
     </div>
@@ -989,12 +1133,18 @@ const StatCard = ({
   <Card className="overflow-hidden border-none shadow-md hover:shadow-lg transition-all duration-300 group animate-fadeIn">
     <CardContent className="p-0">
       <div className="flex items-start gap-4 p-6 relative">
-        <div className={`${bgColor} p-3 rounded-lg transition-all duration-300 group-hover:scale-110`}>
-          <div className={`${iconColor} transition-all duration-300`}>{icon}</div>
+        <div
+          className={`${bgColor} p-3 rounded-lg transition-all duration-300 group-hover:scale-110`}
+        >
+          <div className={`${iconColor} transition-all duration-300`}>
+            {icon}
+          </div>
         </div>
         <div className="z-10">
           <p className="text-sm font-medium text-muted-foreground">{title}</p>
-          <p className="text-xl font-semibold mt-1 transition-all duration-300 group-hover:text-primary">{value}</p>
+          <p className="text-xl font-semibold mt-1 transition-all duration-300 group-hover:text-primary">
+            {value}
+          </p>
           <p className="text-xs text-muted-foreground mt-1">{description}</p>
         </div>
         {/* Decorative element */}
@@ -1017,15 +1167,11 @@ const TabButton = ({
   <Button
     variant={active ? "default" : "ghost"}
     className={`h-10 gap-1.5 text-sm font-medium rounded-none relative overflow-hidden transition-all duration-300 ${
-      active 
-        ? "bg-primary text-primary-foreground" 
-        : "hover:bg-primary/5"
+      active ? "bg-primary text-primary-foreground" : "hover:bg-primary/5"
     }`}
     onClick={onClick}
   >
-    <div className="flex items-center gap-1.5 z-10 relative">
-      {children}
-    </div>
+    <div className="flex items-center gap-1.5 z-10 relative">{children}</div>
     {active && (
       <div className="absolute bottom-0 left-0 w-full h-0.5 bg-white animate-fadeIn"></div>
     )}
