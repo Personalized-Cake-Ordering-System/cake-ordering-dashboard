@@ -70,6 +70,12 @@ const getTypeDisplayName = (type: string): string => {
   return typeNameMap[type] || type;
 };
 
+// Predefined types for cake extra options
+const PREDEFINED_TYPES: Record<string, string> = {
+  Candles: "Nến",
+  CakeBoard: "Đế Bánh",
+};
+
 interface CakeExtraOptionTableProps {
   data: ApiListResponse<ICakeExtraOptionType>;
 }
@@ -91,6 +97,13 @@ export function CakeExtraOptionTable({ data }: CakeExtraOptionTableProps) {
   const existingTypes = React.useMemo(() => {
     return cakeData.map((item) => item.type);
   }, [cakeData]);
+
+  // Check if all predefined types already exist
+  const allPredefinedTypesExist = React.useMemo(() => {
+    return Object.keys(PREDEFINED_TYPES).every((type) =>
+      existingTypes.includes(type)
+    );
+  }, [existingTypes]);
 
   const toggleRowExpansion = (type: string) => {
     setExpandedRows((prev) => ({
@@ -385,15 +398,19 @@ export function CakeExtraOptionTable({ data }: CakeExtraOptionTableProps) {
             <h2 className="text-xl font-semibold text-indigo-800">
               Quản lý tùy chọn thêm
             </h2>
-            <Button
-              variant="outline"
-              size="sm"
-              className="rounded-full px-3 bg-amber-50 hover:bg-amber-100 border-amber-200 text-amber-700 hover:text-amber-800 transition-all flex items-center gap-1"
-              onClick={() => onOpen("createExtraTypeModal", { existingTypes })}
-            >
-              <PlusCircle className="h-4 w-4" />
-              <span>Tạo loại tùy chọn thêm</span>
-            </Button>
+            {!allPredefinedTypesExist && (
+              <Button
+                variant="outline"
+                size="sm"
+                className="rounded-full px-3 bg-amber-50 hover:bg-amber-100 border-amber-200 text-amber-700 hover:text-amber-800 transition-all flex items-center gap-1"
+                onClick={() =>
+                  onOpen("createExtraTypeModal", { existingTypes })
+                }
+              >
+                <PlusCircle className="h-4 w-4" />
+                <span>Tạo loại tùy chọn thêm</span>
+              </Button>
+            )}
           </div>
           <CardContent>
             {cakeData.length === 0 ? (
@@ -406,17 +423,19 @@ export function CakeExtraOptionTable({ data }: CakeExtraOptionTableProps) {
                   Bạn cần tạo loại tùy chọn thêm trước khi thêm các tùy chọn
                   riêng lẻ
                 </p>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="rounded-full px-3 bg-amber-50 hover:bg-amber-100 border-amber-200 text-amber-700 hover:text-amber-800 transition-all flex items-center gap-1"
-                  onClick={() =>
-                    onOpen("createExtraTypeModal", { existingTypes })
-                  }
-                >
-                  <PlusCircle className="h-4 w-4" />
-                  <span>Tạo loại tùy chọn thêm</span>
-                </Button>
+                {!allPredefinedTypesExist && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="rounded-full px-3 bg-amber-50 hover:bg-amber-100 border-amber-200 text-amber-700 hover:text-amber-800 transition-all flex items-center gap-1"
+                    onClick={() =>
+                      onOpen("createExtraTypeModal", { existingTypes })
+                    }
+                  >
+                    <PlusCircle className="h-4 w-4" />
+                    <span>Tạo loại tùy chọn thêm</span>
+                  </Button>
+                )}
               </div>
             ) : (
               <ExpandDataTable

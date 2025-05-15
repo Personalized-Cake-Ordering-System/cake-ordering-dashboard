@@ -54,6 +54,12 @@ enum CakeMessageOptionTypeEnum {
   PLAQUE_COLOUR = "PLAQUE_COLOUR",
 }
 
+// Predefined types for cake messages
+const PREDEFINED_TYPES: Record<string, string> = {
+  [CakeMessageOptionTypeEnum.PIPING_COLOUR]: "Màu Viền",
+  [CakeMessageOptionTypeEnum.PLAQUE_COLOUR]: "Màu Thông Điệp",
+};
+
 // Simplified icon mapping
 const getItemIcon = (type: string) => {
   const iconMap = {
@@ -100,6 +106,13 @@ export function CakeMessageOptionTable({ data }: CakeMessageOptionTableProps) {
   const existingTypes = React.useMemo(() => {
     return cakeData.map((item) => item.type);
   }, [cakeData]);
+
+  // Check if all predefined types already exist
+  const allPredefinedTypesExist = React.useMemo(() => {
+    return Object.keys(PREDEFINED_TYPES).every((type) =>
+      existingTypes.includes(type)
+    );
+  }, [existingTypes]);
 
   const toggleRowExpansion = (type: string) => {
     setExpandedRows((prev) => ({
@@ -378,17 +391,19 @@ export function CakeMessageOptionTable({ data }: CakeMessageOptionTableProps) {
             <h2 className="text-xl font-semibold text-indigo-800">
               Quản lý tin nhắn bánh
             </h2>
-            <Button
-              variant="outline"
-              size="sm"
-              className="rounded-full px-3 bg-amber-50 hover:bg-amber-100 border-amber-200 text-amber-700 hover:text-amber-800 transition-all flex items-center gap-1"
-              onClick={() =>
-                onOpen("createMessageTypeModal", { existingTypes })
-              }
-            >
-              <PlusCircle className="h-4 w-4" />
-              <span>Thêm loại tin nhắn mới</span>
-            </Button>
+            {!allPredefinedTypesExist && (
+              <Button
+                variant="outline"
+                size="sm"
+                className="rounded-full px-3 bg-amber-50 hover:bg-amber-100 border-amber-200 text-amber-700 hover:text-amber-800 transition-all flex items-center gap-1"
+                onClick={() =>
+                  onOpen("createMessageTypeModal", { existingTypes })
+                }
+              >
+                <PlusCircle className="h-4 w-4" />
+                <span>Thêm loại tin nhắn mới</span>
+              </Button>
+            )}
           </div>
           <CardContent>
             {cakeData.length === 0 ? (
@@ -400,17 +415,19 @@ export function CakeMessageOptionTable({ data }: CakeMessageOptionTableProps) {
                 <p className="text-indigo-600 mb-4">
                   Bạn cần tạo loại tin nhắn trước khi thêm các tin nhắn riêng lẻ
                 </p>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="rounded-full px-3 bg-amber-50 hover:bg-amber-100 border-amber-200 text-amber-700 hover:text-amber-800 transition-all flex items-center gap-1"
-                  onClick={() =>
-                    onOpen("createMessageTypeModal", { existingTypes })
-                  }
-                >
-                  <PlusCircle className="h-4 w-4" />
-                  <span>Tạo loại tin nhắn</span>
-                </Button>
+                {!allPredefinedTypesExist && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="rounded-full px-3 bg-amber-50 hover:bg-amber-100 border-amber-200 text-amber-700 hover:text-amber-800 transition-all flex items-center gap-1"
+                    onClick={() =>
+                      onOpen("createMessageTypeModal", { existingTypes })
+                    }
+                  >
+                    <PlusCircle className="h-4 w-4" />
+                    <span>Tạo loại tin nhắn</span>
+                  </Button>
+                )}
               </div>
             ) : (
               <ExpandDataTable

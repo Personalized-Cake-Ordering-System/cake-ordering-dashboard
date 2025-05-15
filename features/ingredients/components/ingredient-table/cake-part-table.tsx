@@ -74,6 +74,15 @@ const getTypeDisplayName = (type: string): string => {
   return typeNameMap[type] || type;
 };
 
+// Predefined types for cake parts
+const PREDEFINED_TYPES: Record<string, string> = {
+  Goo: "Kem Nhân",
+  Icing: "Lớp Phủ",
+  Filling: "Nhân Bánh",
+  Sponge: "Tầng Bánh",
+  Size: "Kích Thước",
+};
+
 interface CakePartTableProps {
   data: ApiListResponse<ICakePartType>;
 }
@@ -95,6 +104,13 @@ export function CakePartTable({ data }: CakePartTableProps) {
   const existingTypes = React.useMemo(() => {
     return cakeData.map((item) => item.type);
   }, [cakeData]);
+
+  // Check if all predefined types already exist
+  const allPredefinedTypesExist = React.useMemo(() => {
+    return Object.keys(PREDEFINED_TYPES).every((type) =>
+      existingTypes.includes(type)
+    );
+  }, [existingTypes]);
 
   const toggleRowExpansion = (type: string) => {
     setExpandedRows((prev) => ({
@@ -374,15 +390,17 @@ export function CakePartTable({ data }: CakePartTableProps) {
               <BoxIcon className="h-5 w-5 mr-2 text-blue-600 dark:text-gray-400" />
               Quản lý phần bánh
             </h2>
-            <Button
-              variant="outline"
-              size="sm"
-              className="rounded-full px-3 bg-blue-50 dark:bg-gray-800 hover:bg-blue-100 dark:hover:bg-gray-700 border-blue-200 dark:border-gray-700 text-blue-700 dark:text-gray-200 hover:text-blue-800 dark:hover:text-white transition-all flex items-center gap-1"
-              onClick={() => onOpen("createPartTypeModal", { existingTypes })}
-            >
-              <PlusCircle className="h-4 w-4" />
-              <span>Thêm loại phần bánh mới</span>
-            </Button>
+            {!allPredefinedTypesExist && (
+              <Button
+                variant="outline"
+                size="sm"
+                className="rounded-full px-3 bg-blue-50 dark:bg-gray-800 hover:bg-blue-100 dark:hover:bg-gray-700 border-blue-200 dark:border-gray-700 text-blue-700 dark:text-gray-200 hover:text-blue-800 dark:hover:text-white transition-all flex items-center gap-1"
+                onClick={() => onOpen("createPartTypeModal", { existingTypes })}
+              >
+                <PlusCircle className="h-4 w-4" />
+                <span>Thêm loại phần bánh mới</span>
+              </Button>
+            )}
           </div>
           <CardContent>
             {cakeData.length === 0 ? (
@@ -392,31 +410,34 @@ export function CakePartTable({ data }: CakePartTableProps) {
                   Chưa có loại phần bánh nào
                 </h3>
                 <p className="text-blue-600 dark:text-gray-400 mb-4">
-                  Bạn cần tạo loại phần bánh trước khi thêm các phần bánh riêng lẻ
+                  Bạn cần tạo loại phần bánh trước khi thêm các phần bánh riêng
+                  lẻ
                 </p>
-                <Button
-                  variant="default"
-                  size="sm"
-                  className="bg-blue-600 dark:bg-gray-700 hover:bg-blue-700 dark:hover:bg-gray-600 text-white shadow-sm"
-                  onClick={() =>
-                    onOpen("createPartTypeModal", { existingTypes })
-                  }
-                >
-                  <PlusCircle className="h-4 w-4 mr-1" />
-                  Tạo loại phần bánh
-                </Button>
+                {!allPredefinedTypesExist && (
+                  <Button
+                    variant="default"
+                    size="sm"
+                    className="bg-blue-600 dark:bg-gray-700 hover:bg-blue-700 dark:hover:bg-gray-600 text-white shadow-sm"
+                    onClick={() =>
+                      onOpen("createPartTypeModal", { existingTypes })
+                    }
+                  >
+                    <PlusCircle className="h-4 w-4 mr-1" />
+                    Tạo loại phần bánh
+                  </Button>
+                )}
               </div>
             ) : (
-            <ExpandDataTable
-              dataTable={dataTable}
-              columns={columns}
-              searchableColumns={[]}
-              filterableColumns={[]}
-              columnLabels={labels}
-              renderAdditionalRows={(row) =>
-                renderExpandedContent(row.original.type, row.original.items)
-              }
-            />
+              <ExpandDataTable
+                dataTable={dataTable}
+                columns={columns}
+                searchableColumns={[]}
+                filterableColumns={[]}
+                columnLabels={labels}
+                renderAdditionalRows={(row) =>
+                  renderExpandedContent(row.original.type, row.original.items)
+                }
+              />
             )}
           </CardContent>
         </Card>
