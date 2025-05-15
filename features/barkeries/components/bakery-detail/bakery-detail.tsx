@@ -333,17 +333,6 @@ const BakeryDetail = ({ bakery }: BakeryDetailProps) => {
                           copyable
                           onCopy={() => copyToClipboard(bakery.email)}
                         />
-                        <InfoItem
-                          icon={
-                            <CreditCard className="h-5 w-5 text-muted-foreground" />
-                          }
-                          label="Tài khoản ngân hàng"
-                          value={bakery.bank_account || "Chưa cập nhật"}
-                          copyable={false}
-                          onCopy={() =>
-                            copyToClipboard(bakery.bank_account || "")
-                          }
-                        />
                       </ul>
                     </div>
                   </div>

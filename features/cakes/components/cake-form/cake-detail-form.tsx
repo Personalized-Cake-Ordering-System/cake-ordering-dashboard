@@ -510,9 +510,14 @@ const CakeDetailForm = ({ initialData }: CakeDetailFormProps) => {
                             step="1"
                             placeholder="0"
                             {...field}
-                            onChange={(e) =>
-                              field.onChange(parseInt(e.target.value) || 0)
-                            }
+                            onChange={(e) => {
+                              const value = parseInt(e.target.value) || 0;
+                              field.onChange(value);
+                              // If creating a new cake, auto-update quantity_default
+                              if (!initialData) {
+                                form.setValue("quantity_default", value);
+                              }
+                            }}
                             className="h-9 text-sm focus:ring-1 focus:ring-primary/20"
                           />
                         </FormControl>
@@ -536,19 +541,13 @@ const CakeDetailForm = ({ initialData }: CakeDetailFormProps) => {
                             step="1"
                             placeholder="0"
                             {...field}
-                            onChange={(e) => {
-                              const value = parseInt(e.target.value) || 0;
-                              field.onChange(value);
-                              // If creating a new cake, auto-update available_cake_quantity
-                              if (!initialData) {
-                                form.setValue("available_cake_quantity", value);
-                              }
-                            }}
-                            className="h-9 text-sm focus:ring-1 focus:ring-primary/20"
+                            disabled
+                            className="h-9 text-sm focus:ring-1 focus:ring-primary/20 bg-gray-50"
                           />
                         </FormControl>
                         <p className="text-xs text-muted-foreground mt-1">
-                          Số lượng sẽ tự động reset về giá trị này vào 12h đêm mỗi ngày
+                          Số lượng sẽ tự động reset về giá trị này vào 12h đêm
+                          mỗi ngày
                         </p>
                         <FormMessage className="text-xs" />
                       </FormItem>
