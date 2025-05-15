@@ -171,7 +171,7 @@ const OrderDetailComponent = ({ order }: OrderDetailComponentProps) => {
               name: result.data.available_cake_name,
               description: result.data.available_cake_description,
               image_url:
-                result.data.available_cake_main_image ||
+                result.data.available_cake_image_files[0].file_url ||
                 "/images/cake-placeholder.png",
               category: {
                 id: result.data.available_cake_type,
@@ -945,16 +945,15 @@ const OrderDetailComponent = ({ order }: OrderDetailComponentProps) => {
                           <>
                             <div className="flex justify-between items-start gap-4">
                               <div className="flex gap-4">
-                                <div className="relative h-16 w-16 overflow-hidden rounded-md border bg-muted/30">
+                                <div className="relative h-full w-16 overflow-hidden rounded-md border bg-muted/30">
                                   <Image
                                     src={
-                                      cakeImages[detail.id] ||
                                       cakeDetails.image_url ||
                                       "/images/cake-placeholder.png"
                                     }
                                     alt={cakeDetails.name || "Bánh"}
-                                    fill
-                                    className="object-cover"
+                                    width={100}
+                                    height={200}
                                   />
                                 </div>
                                 <div className="space-y-1">
