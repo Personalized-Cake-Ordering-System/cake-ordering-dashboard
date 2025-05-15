@@ -59,8 +59,6 @@ import {
 const PREDEFINED_TYPES: Record<string, string> = {
   Candles: "Nến",
   CakeBoard: "Đế Bánh",
-  CakeTopper: "Trang Trí Bánh",
-  PlasticDecoration: "Trang Trí Nhựa",
 };
 
 // Form schema for creating a new extra type
@@ -128,6 +126,9 @@ const CreateExtraTypeModal = () => {
     (typeKey) => !existingTypes.includes(typeKey)
   );
 
+  // Check if there are any missing predefined types
+  const hasMissingPredefinedTypes = missingPredefinedTypes.length > 0;
+
   // Select a predefined type
   const handleSelectPredefinedType = (typeKey: string) => {
     setSelectedPredefinedType(typeKey);
@@ -185,7 +186,7 @@ const CreateExtraTypeModal = () => {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             {/* Predefined Types Selection */}
-            {missingPredefinedTypes.length > 0 && (
+            {hasMissingPredefinedTypes && (
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
                   <Tags className="h-4 w-4 text-indigo-600" />
@@ -216,6 +217,20 @@ const CreateExtraTypeModal = () => {
                     </div>
                   ))}
                 </div>
+              </div>
+            )}
+
+            {!hasMissingPredefinedTypes && (
+              <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-4">
+                <div className="flex items-center gap-2">
+                  <Check className="w-4 h-4 text-amber-600" />
+                  <h3 className="text-sm font-medium text-amber-700">
+                    Tất cả loại tùy chọn thêm đã được tạo
+                  </h3>
+                </div>
+                <p className="text-xs text-amber-600 mt-1 pl-6">
+                  Các loại tùy chọn thêm mặc định đã được tạo đầy đủ.
+                </p>
               </div>
             )}
 

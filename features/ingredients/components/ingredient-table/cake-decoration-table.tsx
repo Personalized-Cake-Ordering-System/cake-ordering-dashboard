@@ -75,6 +75,17 @@ const getTypeDisplayName = (type: string): string => {
   return typeNameMap[type] || type;
 };
 
+// Predefined types for cake decorations
+const PREDEFINED_TYPES: Record<string, string> = {
+  OuterIcing: "Phủ Kem Ngoài",
+  Sprinkles: "Hạt Rắc",
+  Decoration: "Trang Trí",
+  Bling: "Đồ Trang Trí Lấp Lánh",
+  TallSkirt: "Váy Bánh Cao",
+  Drip: "Sốt Chảy Tràn",
+  ShortSkirt: "Váy Bánh Ngắn",
+};
+
 interface CakeDecorationTableProps {
   data: ApiListResponse<ICakeDecorationType>;
 }
@@ -95,19 +106,11 @@ export function CakeDecorationTable({ data }: CakeDecorationTableProps) {
     return cakeData.map((item) => item.type);
   }, [cakeData]);
 
-  // Check if there are missing types
-  const missingTypes = React.useMemo(() => {
-    // Get all defined types from the typeNameMap directly
-    const typeNameMap: Record<string, string> = {
-      Sprinkles: "Hạt Rắc",
-      Decoration: "Trang Trí",
-      Bling: "Đồ Trang Trí Lấp Lánh",
-      TallSkirt: "Phần Kem Phía Trên",
-      Drip: "Sốt Kem",
-      ShortSkirt: "Phần Kem Phía Dưới",
-    };
-    const allDefinedTypes = Object.keys(typeNameMap);
-    return allDefinedTypes.filter((type) => !existingTypes.includes(type));
+  // Check if all predefined types already exist
+  const allPredefinedTypesExist = React.useMemo(() => {
+    return Object.keys(PREDEFINED_TYPES).every((type) =>
+      existingTypes.includes(type)
+    );
   }, [existingTypes]);
 
   const handleDelete = async (id?: string) => {
@@ -404,17 +407,19 @@ export function CakeDecorationTable({ data }: CakeDecorationTableProps) {
               <Cake className="h-5 w-5 mr-2 text-amber-600" />
               Quản lý trang trí bánh
             </h2>
-            <Button
-              variant="outline"
-              size="sm"
-              className="rounded-full px-3 bg-amber-50 hover:bg-amber-100 border-amber-200 text-amber-700 hover:text-amber-800 transition-all flex items-center gap-1"
-              onClick={() =>
-                onOpen("createIngredientTypeModal", { existingTypes })
-              }
-            >
-              <PlusCircle className="h-4 w-4" />
-              <span>Thêm loại trang trí mới</span>
-            </Button>
+            {!allPredefinedTypesExist && (
+              <Button
+                variant="outline"
+                size="sm"
+                className="rounded-full px-3 bg-amber-50 hover:bg-amber-100 border-amber-200 text-amber-700 hover:text-amber-800 transition-all flex items-center gap-1"
+                onClick={() =>
+                  onOpen("createIngredientTypeModal", { existingTypes })
+                }
+              >
+                <PlusCircle className="h-4 w-4" />
+                <span>Thêm loại trang trí mới</span>
+              </Button>
+            )}
           </div>
           <CardContent>
             {cakeData.length === 0 ? (
@@ -426,17 +431,19 @@ export function CakeDecorationTable({ data }: CakeDecorationTableProps) {
                 <p className="text-amber-600 mb-4">
                   Bạn cần tạo loại trang trí trước khi thêm các danh mục
                 </p>
-                <Button
-                  variant="default"
-                  size="sm"
-                  className="bg-amber-600 hover:bg-amber-700 text-white shadow-sm"
-                  onClick={() =>
-                    onOpen("createIngredientTypeModal", { existingTypes })
-                  }
-                >
-                  <PlusCircle className="h-4 w-4 mr-1" />
-                  Tạo loại trang trí
-                </Button>
+                {!allPredefinedTypesExist && (
+                  <Button
+                    variant="default"
+                    size="sm"
+                    className="bg-amber-600 hover:bg-amber-700 text-white shadow-sm"
+                    onClick={() =>
+                      onOpen("createIngredientTypeModal", { existingTypes })
+                    }
+                  >
+                    <PlusCircle className="h-4 w-4 mr-1" />
+                    Tạo loại trang trí
+                  </Button>
+                )}
               </div>
             ) : (
               <ExpandDataTable
