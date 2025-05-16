@@ -94,32 +94,32 @@ export function OrderTable({ orderPromise }: OrderTableProps) {
 
   return (
     <div className="h-full flex flex-col">
-      <div className="flex items-center justify-between px-6 py-3 border-b border-green-100 dark:border-green-800">
-        <div className="flex gap-2">
-          <Button 
-            variant="outline" 
-            size="sm" 
-            className="border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-900/50 text-green-700 dark:text-green-300 hover:bg-green-100 dark:hover:bg-green-800"
+      <div className="flex items-center justify-between px-3 py-2 border-b border-green-100 dark:border-green-800">
+        <div className="flex gap-1 text-xs">
+          <Button
+            variant="outline"
+            size="sm"
+            className="h-7 px-2 text-xs border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-900/50 text-green-700 dark:text-green-300 hover:bg-green-100 dark:hover:bg-green-800"
           >
-            <Filter className="h-4 w-4 mr-2" />
-            Lọc nâng cao
+            <Filter className="h-3 w-3 mr-1" />
+            Lọc
           </Button>
-          <Button 
-            variant="outline" 
-            size="sm" 
-            className="border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-900/50 text-green-700 dark:text-green-300 hover:bg-green-100 dark:hover:bg-green-800"
+          <Button
+            variant="outline"
+            size="sm"
+            className="h-7 px-2 text-xs border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-900/50 text-green-700 dark:text-green-300 hover:bg-green-100 dark:hover:bg-green-800"
           >
-            <RefreshCw className="h-4 w-4 mr-2" />
+            <RefreshCw className="h-3 w-3 mr-1" />
             Làm mới
           </Button>
         </div>
-        <Button 
-          variant="outline" 
-          size="sm" 
-          className="border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-900/50 text-green-700 dark:text-green-300 hover:bg-green-100 dark:hover:bg-green-800"
+        <Button
+          variant="outline"
+          size="sm"
+          className="h-7 px-2 text-xs border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-900/50 text-green-700 dark:text-green-300 hover:bg-green-100 dark:hover:bg-green-800"
         >
-          <Download className="h-4 w-4 mr-2" />
-          Xuất Excel
+          <Download className="h-3 w-3 mr-1" />
+          Xuất
         </Button>
       </div>
       <DataTable
