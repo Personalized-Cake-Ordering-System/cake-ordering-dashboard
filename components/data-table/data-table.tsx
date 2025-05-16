@@ -55,9 +55,9 @@ export function DataTable<TData, TValue>({
         columnLabels={columnLabels}
         newRowLink={newRowLink}
       />
-      <div className="rounded-lg border border-green-100 dark:border-green-900 shadow-sm overflow-hidden">
-        <div className="overflow-auto">
-          <Table className="w-full border-collapse">
+      <div className="rounded-lg border border-green-100 dark:border-green-900 shadow-sm">
+        <div className="overflow-x-auto">
+          <Table className="w-full border-collapse min-w-[800px]">
             <TableHeader className="bg-green-50 dark:bg-green-950 sticky top-0 z-10">
               {dataTable.getHeaderGroups().map((headerGroup) => (
                 <TableRow
@@ -67,17 +67,28 @@ export function DataTable<TData, TValue>({
                   {headerGroup.headers.map((header) => (
                     <TableHead
                       key={header.id}
-                      className="h-10 px-4 text-left align-middle font-medium text-green-700 dark:text-green-300 text-[13px] tracking-wide"
+                      className="h-8 px-2 text-left align-middle font-medium text-green-700 dark:text-green-300 text-[12px] tracking-wide whitespace-nowrap"
                       style={{
-                        width: header.column.id === "select" ? "40px" : 
-                              header.column.id === "order_code" ? "180px" : 
-                              header.column.id === "order_status" ? "150px" : 
-                              header.column.id === "order_date" ? "120px" : 
-                              header.column.id === "customer_id" ? "160px" : 
-                              header.column.id === "order_total" ? "120px" : 
-                              header.column.id === "payment_type" ? "150px" : 
-                              header.column.id === "shipping_address" ? "200px" : 
-                              header.column.id === "actions" ? "100px" : "auto"
+                        width:
+                          header.column.id === "select"
+                            ? "32px"
+                            : header.column.id === "order_code"
+                            ? "120px"
+                            : header.column.id === "order_status"
+                            ? "110px"
+                            : header.column.id === "order_date"
+                            ? "90px"
+                            : header.column.id === "customer_id"
+                            ? "120px"
+                            : header.column.id === "order_total"
+                            ? "90px"
+                            : header.column.id === "payment_type"
+                            ? "120px"
+                            : header.column.id === "shipping_address"
+                            ? "160px"
+                            : header.column.id === "actions"
+                            ? "80px"
+                            : "auto",
                       }}
                     >
                       {header.isPlaceholder
@@ -99,25 +110,44 @@ export function DataTable<TData, TValue>({
                     data-state={row.getIsSelected() && "selected"}
                     className={`
                       border-b border-green-100 dark:border-green-900
-                      ${index % 2 === 0 ? 'bg-white dark:bg-gray-950' : 'bg-green-50/40 dark:bg-green-950/40'}
+                      ${
+                        index % 2 === 0
+                          ? "bg-white dark:bg-gray-950"
+                          : "bg-green-50/40 dark:bg-green-950/40"
+                      }
                       hover:bg-green-100/50 dark:hover:bg-green-900/30
-                      ${row.getIsSelected() ? 'bg-green-100 dark:bg-green-900/50 hover:bg-green-100 dark:hover:bg-green-900/50' : ''}
+                      ${
+                        row.getIsSelected()
+                          ? "bg-green-100 dark:bg-green-900/50 hover:bg-green-100 dark:hover:bg-green-900/50"
+                          : ""
+                      }
                     `}
                   >
                     {row.getVisibleCells().map((cell) => (
                       <TableCell
                         key={cell.id}
-                        className="p-3 text-sm align-middle"
+                        className="py-2 px-2 text-xs align-middle"
                         style={{
-                          width: cell.column.id === "select" ? "40px" : 
-                                cell.column.id === "order_code" ? "180px" : 
-                                cell.column.id === "order_status" ? "150px" : 
-                                cell.column.id === "order_date" ? "120px" : 
-                                cell.column.id === "customer_id" ? "160px" : 
-                                cell.column.id === "order_total" ? "120px" : 
-                                cell.column.id === "payment_type" ? "150px" : 
-                                cell.column.id === "shipping_address" ? "200px" : 
-                                cell.column.id === "actions" ? "100px" : "auto"
+                          width:
+                            cell.column.id === "select"
+                              ? "32px"
+                              : cell.column.id === "order_code"
+                              ? "120px"
+                              : cell.column.id === "order_status"
+                              ? "110px"
+                              : cell.column.id === "order_date"
+                              ? "90px"
+                              : cell.column.id === "customer_id"
+                              ? "120px"
+                              : cell.column.id === "order_total"
+                              ? "90px"
+                              : cell.column.id === "payment_type"
+                              ? "120px"
+                              : cell.column.id === "shipping_address"
+                              ? "160px"
+                              : cell.column.id === "actions"
+                              ? "80px"
+                              : "auto",
                         }}
                       >
                         {flexRender(

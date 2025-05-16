@@ -3,6 +3,12 @@ import { IOrder } from "@/features/orders/types/order-type";
 import { Row, type Column } from "@tanstack/react-table";
 import { User } from "lucide-react";
 import { cn } from "@/lib/utils";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export const cusNameColumn = {
   accessorKey: "customer.name",
@@ -14,18 +20,38 @@ export const cusNameColumn = {
     const customerName = customer.name || "Không xác định";
     const customerId = customer.id || row.original.customer_id || "";
 
-    const displayCustomerId = customerId ? customerId.slice(0, 8) : "N/A";
+    // Truncate long customer names
+    const displayName =
+      customerName.length > 10
+        ? `${customerName.slice(0, 10)}...`
+        : customerName;
+
+    const displayCustomerId = customerId ? customerId.slice(0, 6) : "N/A";
 
     return (
-      <div className="flex flex-col min-w-[150px]">
-        <div className="flex items-center gap-1">
-          <User className="h-4 w-4 text-primary" />
-          <span className="font-medium text-foreground">{customerName}</span>
-        </div>
-        <span className="text-xs text-muted-foreground ml-5">
-          #{displayCustomerId}
-        </span>
-      </div>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <div className="flex flex-col">
+              <div className="flex items-center gap-1">
+                <User className="h-3.5 w-3.5 text-primary" />
+                <span className="font-medium text-foreground text-xs">
+                  {displayName}
+                </span>
+              </div>
+              <span className="text-[10px] text-muted-foreground ml-4">
+                #{displayCustomerId}
+              </span>
+            </div>
+          </TooltipTrigger>
+          <TooltipContent side="top">
+            <div className="text-xs">
+              <p className="font-medium">{customerName}</p>
+              <p className="text-muted-foreground">#{customerId}</p>
+            </div>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
     );
   },
   enableSorting: false,

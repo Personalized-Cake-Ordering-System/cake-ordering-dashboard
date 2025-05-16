@@ -1582,7 +1582,19 @@ const OrderDetailComponent = ({ order }: OrderDetailComponentProps) => {
                 </div>
                 <div>
                   <p className="font-medium text-foreground">
-                    {Math.round(Number(order.shipping_time))} phút
+                    {(() => {
+                      // Convert shipping time to number
+                      const shippingTime = Number(order.shipping_time);
+
+                      // If shipping time is less than 10, it's likely in hours (e.g., 1.5 hours)
+                      // We convert it to minutes (1.5 hours = 90 minutes)
+                      if (shippingTime < 10) {
+                        return Math.round(shippingTime * 60) + " phút";
+                      }
+
+                      // Otherwise, it's already in minutes
+                      return Math.round(shippingTime) + " phút";
+                    })()}
                   </p>
                   <p className="text-sm text-muted-foreground">
                     Thời gian giao hàng dự kiến
