@@ -388,22 +388,21 @@ export function CakeMessageOptionTable({ data }: CakeMessageOptionTableProps) {
       <div className="space-y-4">
         <Card className="shadow-sm border-indigo-100">
           <div className="p-4 border-b border-indigo-100 flex justify-between items-center">
-            <h2 className="text-xl font-semibold text-indigo-800">
+            <h2 className="text-xl font-semibold text-indigo-800 flex items-center">
+              <MessageSquare className="h-5 w-5 mr-2 text-indigo-600" />
               Quản lý tin nhắn bánh
             </h2>
-            {!allPredefinedTypesExist && (
-              <Button
-                variant="outline"
-                size="sm"
-                className="rounded-full px-3 bg-amber-50 hover:bg-amber-100 border-amber-200 text-amber-700 hover:text-amber-800 transition-all flex items-center gap-1"
-                onClick={() =>
-                  onOpen("createMessageTypeModal", { existingTypes })
-                }
-              >
-                <PlusCircle className="h-4 w-4" />
-                <span>Thêm loại tin nhắn mới</span>
-              </Button>
-            )}
+            <Button
+              variant="outline"
+              size="sm"
+              className="rounded-full px-3 bg-amber-50 hover:bg-amber-100 border-amber-200 text-amber-700 hover:text-amber-800 transition-all flex items-center gap-1"
+              onClick={() =>
+                onOpen("createMessageTypeModal", { existingTypes })
+              }
+            >
+              <PlusCircle className="h-4 w-4" />
+              <span>Thêm loại tin nhắn mới</span>
+            </Button>
           </div>
           <CardContent>
             {cakeData.length === 0 ? (

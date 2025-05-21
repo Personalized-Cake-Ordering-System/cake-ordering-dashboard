@@ -104,7 +104,7 @@ const CreateMessageTypeModal = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      type: CakeMessageTypeEnum.NONE,
+      type: CakeMessageTypeEnum.TEXT,
       name: CakeMessageOptionTypeEnum.PIPING_COLOUR,
       is_default: false,
       color: getColorValue("Black"),
@@ -114,7 +114,7 @@ const CreateMessageTypeModal = () => {
   // Reset form when modal closes or changes
   const resetForm = () => {
     form.reset({
-      type: CakeMessageTypeEnum.NONE,
+      type: CakeMessageTypeEnum.TEXT,
       name: CakeMessageOptionTypeEnum.PIPING_COLOUR,
       is_default: false,
       color: getColorValue("Black"),
@@ -134,13 +134,15 @@ const CreateMessageTypeModal = () => {
       startTransition(async () => {
         // Create the data object based on form values
         const submitData: any = {
-          type: values.type,
+          type: "TEXT", // Explicitly set as string rather than enum value
           name: values.name,
           color: values.color?.name,
         };
 
         // Wrap the data in an array to match the collection modal implementation
         const formattedItems = [submitData];
+
+        console.log("Submitting data:", formattedItems);
 
         // Call the API
         const result = await createCakeMessage(formattedItems);
@@ -175,73 +177,18 @@ const CreateMessageTypeModal = () => {
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            {/* Type Field - Dropdown selection */}
-            <FormField
-              control={form.control}
-              name="type"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-xs flex items-center gap-1">
-                    <MessageSquare className="w-3.5 h-3.5 text-primary" />
-                    Loại tin nhắn <span className="text-red-500">*</span>
-                  </FormLabel>
-                  <FormControl>
-                    <Popover
-                      open={typePopoverOpen}
-                      onOpenChange={setTypePopoverOpen}
-                    >
-                      <PopoverTrigger asChild>
-                        <Button
-                          variant="outline"
-                          role="combobox"
-                          className="w-full justify-between rounded-md h-9 text-sm"
-                          aria-expanded={typePopoverOpen}
-                        >
-                          <span className="truncate">
-                            {getTypeDisplayName(field.value)}
-                          </span>
-                          <ChevronsUpDown className="ml-1 h-4 w-4 flex-shrink-0 opacity-50" />
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-full p-0" align="start">
-                        <Command>
-                          <CommandList>
-                            <CommandGroup>
-                              {Object.values(CakeMessageTypeEnum).map(
-                                (messageType) => (
-                                  <CommandItem
-                                    key={messageType}
-                                    value={messageType}
-                                    onSelect={() => {
-                                      form.setValue(
-                                        "type",
-                                        messageType as CakeMessageTypeEnum
-                                      );
-                                      setTypePopoverOpen(false);
-                                    }}
-                                  >
-                                    {getTypeDisplayName(messageType)}
-                                    <Check
-                                      className={cn(
-                                        "ml-auto h-4 w-4",
-                                        field.value === messageType
-                                          ? "opacity-100"
-                                          : "opacity-0"
-                                      )}
-                                    />
-                                  </CommandItem>
-                                )
-                              )}
-                            </CommandGroup>
-                          </CommandList>
-                        </Command>
-                      </PopoverContent>
-                    </Popover>
-                  </FormControl>
-                  <FormMessage className="text-xs" />
-                </FormItem>
-              )}
-            />
+            {/* Type is now fixed to TEXT (Nội dung) - showing as info only */}
+            <div className="space-y-1.5">
+              <FormLabel className="text-xs flex items-center gap-1">
+                <MessageSquare className="w-3.5 h-3.5 text-primary" />
+                Loại tin nhắn
+              </FormLabel>
+              <div className="flex items-center h-9 px-3 border border-indigo-100 rounded-md bg-gradient-to-r from-indigo-50/70 to-blue-50/70 shadow-sm">
+                <span className="text-sm font-medium text-indigo-700">
+                  Nội dung
+                </span>
+              </div>
+            </div>
 
             {/* Info Title */}
             <div className="pt-2 border-t">
