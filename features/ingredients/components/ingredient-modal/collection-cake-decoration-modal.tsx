@@ -860,9 +860,9 @@ const CollectionCakeDecorationModal = () => {
 
   return (
     <Dialog open={isOpenModal} onOpenChange={handleClose}>
-      <DialogContent className="max-w-md max-h-[85vh] rounded-xl overflow-y-auto">
+      <DialogContent className="max-w-sm max-h-[80vh] rounded-xl overflow-y-auto p-4">
         <DialogHeader className="pb-1">
-          <DialogTitle className="text-lg font-bold flex items-center gap-2">
+          <DialogTitle className="text-base font-bold flex items-center gap-1.5">
             <CakeSlice className="w-4 h-4" />
             {currentStep === "form"
               ? "Thêm Trang Trí"
@@ -877,24 +877,24 @@ const CollectionCakeDecorationModal = () => {
             <div className="flex flex-col gap-1 pt-1">
               {currentStep === "form" && (
                 <>
-                  <div className="flex gap-2 w-full">
+                  <div className="flex gap-1 w-full">
                     <Button
                       type="button"
                       onClick={addNewItem}
                       variant="outline"
-                      className="gap-1 rounded-md flex-1 h-7 text-xs"
+                      className="gap-1 rounded-md flex-1 h-7 text-[10px]"
                     >
                       <Plus className="w-3 h-3" />
-                      Thêm trang trí mới
+                      Thêm trang trí
                     </Button>
                     <Button
                       type="button"
                       onClick={goToSummary}
                       disabled={!currentItemValidated}
-                      className="gap-1 rounded-md flex-1 h-7 text-xs"
+                      className="gap-1 rounded-md flex-1 h-7 text-[10px]"
                     >
                       <ListFilter className="w-3 h-3" />
-                      Xem danh sách ({decorationItems.length})
+                      Xác nhận ({decorationItems.length})
                     </Button>
                   </div>
                 </>
@@ -903,7 +903,7 @@ const CollectionCakeDecorationModal = () => {
               {currentStep === "summary" && (
                 <Button
                   type="submit"
-                  className="w-full rounded-md h-8 text-xs"
+                  className="w-full rounded-md h-7 text-xs"
                   disabled={
                     isPending || decorationItems.length === 0 || !allItemsValid
                   }
@@ -911,8 +911,8 @@ const CollectionCakeDecorationModal = () => {
                   {isPending
                     ? "Đang xử lý..."
                     : !allItemsValid
-                    ? "Một số trang trí chưa hoàn thành"
-                    : `Xác nhận thêm ${decorationItems.length} trang trí`}
+                    ? "Dữ liệu chưa hoàn chỉnh"
+                    : `Lưu ${decorationItems.length} trang trí`}
                 </Button>
               )}
 
@@ -920,7 +920,7 @@ const CollectionCakeDecorationModal = () => {
                 type="button"
                 variant="outline"
                 onClick={handleClose}
-                className="rounded-md h-8 text-xs w-full"
+                className="rounded-md h-7 text-xs w-full"
               >
                 Hủy bỏ
               </Button>

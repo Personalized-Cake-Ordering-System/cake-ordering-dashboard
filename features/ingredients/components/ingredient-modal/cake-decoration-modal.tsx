@@ -227,16 +227,16 @@ const CakeDecorationModal = () => {
 
   return (
     <Dialog open={isOpenModal} onOpenChange={onClose}>
-      <DialogContent className="max-w-xl rounded-xl overflow-visible">
-        <DialogHeader className="pb-2">
-          <DialogTitle className="text-2xl font-bold flex items-center gap-2">
-            <CakeSlice className="w-6 h-6" />
+      <DialogContent className="max-w-md rounded-xl overflow-visible">
+        <DialogHeader className="pb-1">
+          <DialogTitle className="text-lg font-bold flex items-center gap-2">
+            <CakeSlice className="w-5 h-5" />
             Cập Nhật Trang Trí
           </DialogTitle>
         </DialogHeader>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
             {/* Row 1: Image Upload Field */}
             <FormField
               control={form.control}
@@ -248,8 +248,8 @@ const CakeDecorationModal = () => {
                     Hình Ảnh Trang Trí
                   </FormLabel>
                   <FormControl>
-                    <div className="flex flex-col gap-2">
-                      <div className="relative w-full h-32 border rounded-md border-dashed flex items-center justify-center bg-gray-50/50 group">
+                    <div className="flex flex-col gap-1">
+                      <div className="relative w-full h-28 border rounded-md border-dashed flex items-center justify-center bg-gray-50/50 group">
                         {imageLoading || fetchingImage ? (
                           <div className="flex items-center justify-center">
                             <Loader className="h-5 w-5 animate-spin text-primary" />
@@ -270,7 +270,7 @@ const CakeDecorationModal = () => {
                           />
                         ) : (
                           <div className="flex flex-col items-center justify-center text-gray-400 text-center px-2">
-                            <ImagePlus className="h-6 w-6 mb-1" />
+                            <ImagePlus className="h-5 w-5 mb-1" />
                             <p className="text-xs">Upload decoration image</p>
                           </div>
                         )}
@@ -309,25 +309,25 @@ const CakeDecorationModal = () => {
             />
 
             {/* Row 2: Name and Type */}
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-2">
               {/* Left: Name */}
               <FormField
                 control={form.control}
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="flex items-center gap-2 text-xs mb-1">
-                      <CakeSlice className="w-3.5 h-3.5 text-primary" />
+                    <FormLabel className="flex items-center gap-1 text-xs mb-0.5">
+                      <CakeSlice className="w-3 h-3 text-primary" />
                       Tên trang trí
                     </FormLabel>
                     <FormControl>
                       <Input
                         placeholder="Nhập tên"
                         {...field}
-                        className="rounded-md h-8 text-sm"
+                        className="rounded-md h-7 text-xs"
                       />
                     </FormControl>
-                    <FormMessage className="text-xs" />
+                    <FormMessage className="text-[10px]" />
                   </FormItem>
                 )}
               />
@@ -338,40 +338,44 @@ const CakeDecorationModal = () => {
                 name="type"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="flex items-center gap-2 text-xs mb-1">
-                      <CakeSlice className="w-3.5 h-3.5 text-primary" />
+                    <FormLabel className="flex items-center gap-1 text-xs mb-0.5">
+                      <CakeSlice className="w-3 h-3 text-primary" />
                       Loại trang trí
                     </FormLabel>
                     <Select value={field.value} onValueChange={field.onChange}>
                       <FormControl>
-                        <SelectTrigger className="rounded-md h-8 text-sm">
+                        <SelectTrigger className="rounded-md h-7 text-xs">
                           <SelectValue placeholder="Chọn loại trang trí" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
                         {TYPE_OPTIONS.map((type) => (
-                          <SelectItem key={type} value={type}>
+                          <SelectItem
+                            key={type}
+                            value={type}
+                            className="text-xs"
+                          >
                             {type}
                           </SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
-                    <FormMessage className="text-xs" />
+                    <FormMessage className="text-[10px]" />
                   </FormItem>
                 )}
               />
             </div>
 
             {/* Row 3: Color and Price */}
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-2">
               {/* Left: Color */}
               <FormField
                 control={form.control}
                 name="color"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="flex items-center gap-2 text-xs mb-1">
-                      <Palette className="w-3.5 h-3.5 text-purple-500" />
+                    <FormLabel className="flex items-center gap-1 text-xs mb-0.5">
+                      <Palette className="w-3 h-3 text-purple-500" />
                       Màu sắc
                     </FormLabel>
                     <Popover
@@ -384,11 +388,11 @@ const CakeDecorationModal = () => {
                             variant="outline"
                             role="combobox"
                             className={cn(
-                              "w-full justify-between rounded-md h-8 hover:bg-transparent text-sm",
+                              "w-full justify-between rounded-md h-7 hover:bg-transparent text-xs",
                               !field.value && "text-muted-foreground"
                             )}
                           >
-                            <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-1">
                               {selectedColor && (
                                 <div
                                   className="w-3 h-3 rounded-full flex-shrink-0"
@@ -448,7 +452,7 @@ const CakeDecorationModal = () => {
                         </Command>
                       </PopoverContent>
                     </Popover>
-                    <FormMessage className="text-xs" />
+                    <FormMessage className="text-[10px]" />
                   </FormItem>
                 )}
               />
@@ -459,8 +463,8 @@ const CakeDecorationModal = () => {
                 name="price"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="flex items-center gap-2 text-xs mb-1">
-                      <DollarSign className="w-3.5 h-3.5 text-primary" />
+                    <FormLabel className="flex items-center gap-1 text-xs mb-0.5">
+                      <DollarSign className="w-3 h-3 text-primary" />
                       Giá
                     </FormLabel>
                     <FormControl>
@@ -468,10 +472,10 @@ const CakeDecorationModal = () => {
                         type="number"
                         placeholder="Nhập giá"
                         {...field}
-                        className="rounded-md h-8 text-sm"
+                        className="rounded-md h-7 text-xs"
                       />
                     </FormControl>
-                    <FormMessage className="text-xs" />
+                    <FormMessage className="text-[10px]" />
                   </FormItem>
                 )}
               />
@@ -482,12 +486,12 @@ const CakeDecorationModal = () => {
               control={form.control}
               name="is_default"
               render={({ field }) => (
-                <FormItem className="flex items-center gap-2 py-0">
+                <FormItem className="flex items-center gap-1.5 py-0">
                   <FormControl>
                     <Checkbox
                       checked={field.value}
                       onCheckedChange={field.onChange}
-                      className="h-3.5 w-3.5"
+                      className="h-3 w-3"
                     />
                   </FormControl>
                   <FormLabel className="text-xs !mt-0">
@@ -502,19 +506,19 @@ const CakeDecorationModal = () => {
               control={form.control}
               name="description"
               render={({ field }) => (
-                <FormItem className="mb-1">
-                  <FormLabel className="flex items-center gap-2 text-xs mb-1">
-                    <FileText className="w-3.5 h-3.5 text-primary" />
+                <FormItem className="mb-0">
+                  <FormLabel className="flex items-center gap-1 text-xs mb-0.5">
+                    <FileText className="w-3 h-3 text-primary" />
                     Mô tả
                   </FormLabel>
                   <FormControl>
                     <textarea
                       placeholder="Nhập mô tả"
                       {...field}
-                      className="w-full rounded-md border p-2 text-sm min-h-[60px]"
+                      className="w-full rounded-md border p-1.5 text-xs min-h-[40px]"
                     />
                   </FormControl>
-                  <FormMessage className="text-xs" />
+                  <FormMessage className="text-[10px]" />
                 </FormItem>
               )}
             />
@@ -524,17 +528,17 @@ const CakeDecorationModal = () => {
                 type="button"
                 variant="outline"
                 onClick={onClose}
-                className="rounded-md h-8 text-xs"
+                className="rounded-md h-7 text-xs"
               >
                 Hủy bỏ
               </Button>
               <Button
                 type="submit"
-                className="rounded-md h-8 text-xs"
+                className="rounded-md h-7 text-xs"
                 disabled={isPending}
               >
                 {isPending ? (
-                  <div className="flex items-center gap-1.5">
+                  <div className="flex items-center gap-1">
                     <Loader className="h-3 w-3 animate-spin" />
                     <span>Đang lưu...</span>
                   </div>

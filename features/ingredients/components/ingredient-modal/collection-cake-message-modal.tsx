@@ -127,7 +127,7 @@ const CollectionCakeMessageModal = () => {
   // Create a new empty message item
   const createEmptyItem = () => {
     return {
-      type: CakeMessageTypeEnum.NONE,
+      type: CakeMessageTypeEnum.TEXT,
       name: CakeMessageOptionTypeEnum.PIPING_COLOUR,
       color: getColorValue("Black"),
     };
@@ -278,7 +278,7 @@ const CollectionCakeMessageModal = () => {
     try {
       // Format the data for API submission to match the required structure
       const formattedItems = values.messages.map((item) => ({
-        type: item.type,
+        type: "TEXT", // Explicitly use string "TEXT" instead of enum value
         name: item.name,
         color: item.color.name,
       }));
@@ -335,7 +335,7 @@ const CollectionCakeMessageModal = () => {
     const validation = {
       nameValid: !!currentItem.name,
       colorValid: !!currentItem.color && !!currentItem.color.name,
-      typeValid: !!currentItem.type,
+      typeValid: true, // Always valid because type is fixed
     };
 
     return (
@@ -419,44 +419,17 @@ const CollectionCakeMessageModal = () => {
             )}
           </div>
 
-          {/* Type Field */}
+          {/* Type Field - Fixed to TEXT (Nội dung) */}
           <div className="space-y-1.5">
             <FormLabel className="flex items-center gap-2 text-sm">
               <MessageSquare className="w-4 h-4 text-primary" />
-              Loại tin nhắn <span className="text-red-500">*</span>
+              Loại tin nhắn
             </FormLabel>
-            <Select
-              value={currentItem.type}
-              onValueChange={(value) =>
-                updateCurrentItem("type", value as CakeMessageTypeEnum)
-              }
-              onOpenChange={() =>
-                setTouchedFields((prev) => ({ ...prev, type: true }))
-              }
-            >
-              <SelectTrigger
-                className={cn(
-                  "rounded-md h-9",
-                  isFieldTouched("type") &&
-                    !validation.typeValid &&
-                    "border-red-500"
-                )}
-              >
-                <SelectValue placeholder="Chọn loại tin nhắn" />
-              </SelectTrigger>
-              <SelectContent>
-                {Object.values(CakeMessageTypeEnum).map((messageType) => (
-                  <SelectItem key={messageType} value={messageType}>
-                    {getTypeDisplayName(messageType)}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            {isFieldTouched("type") && !validation.typeValid && (
-              <p className="text-xs text-red-500">
-                Vui lòng chọn loại tin nhắn
-              </p>
-            )}
+            <div className="flex items-center h-9 px-3 border border-indigo-100 rounded-md bg-gradient-to-r from-indigo-50/70 to-blue-50/70 shadow-sm">
+              <span className="text-sm font-medium text-indigo-700">
+                Nội dung
+              </span>
+            </div>
           </div>
 
           {/* Color Field */}
