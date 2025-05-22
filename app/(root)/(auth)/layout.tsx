@@ -4,9 +4,9 @@ import Image from "next/image";
 import { redirect } from "next/navigation";
 
 const Layout = async ({ children }: { children: ReactNode }) => {
-//   const session = await auth();
+  //   const session = await auth();
 
-//   if (session) redirect("/");
+  //   if (session) redirect("/");
 
   return (
     <main className="relative flex flex-col-reverse text-light-100 sm:flex-row">

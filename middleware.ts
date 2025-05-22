@@ -1,33 +1,43 @@
-import { NextRequest, NextResponse } from "next/server";
-import { getToken } from "next-auth/jwt";
+import { NextResponse } from "next/server";
+import { auth } from "./lib/next-auth/auth";
 
-export async function middleware(request: NextRequest) {
-  // Extract token using next-auth JWT approach
-  const token = await getToken({
-    req: request,
-    secret: process.env.NEXTAUTH_SECRET,
-  });
+export default auth((req) => {
+  const { nextUrl } = req;
+  const isLoggedIn = !!req.auth;
+  const userRole = req.auth?.user.role?.toUpperCase();
+  const isAdmin = userRole === "ADMIN";
+  const isBakery = userRole === "BAKERY";
 
-  // Only handle redirection for dashboard URL
-  if (request.nextUrl.pathname === "/dashboard") {
-    // If user is logged in and has a role
-    if (token?.role) {
-      const userRole = token.role.toString().toUpperCase();
+  const isAdminDashboard = nextUrl.pathname.startsWith("/dashboard/admin");
+  const isDashboard = nextUrl.pathname === "/dashboard";
 
-      // Redirect admin users to admin dashboard
-      if (userRole === "ADMIN") {
-        return NextResponse.redirect(new URL("/dashboard/admin", request.url));
-      }
+  if (isAdminDashboard) {
+    if (!isLoggedIn) {
+      return NextResponse.redirect(new URL("/sign-in", nextUrl));
+    }
+    if (!isAdmin) {
+      // Bakery hoặc role khác cố vào admin sẽ bị chuyển về /dashboard
+      return NextResponse.redirect(new URL("/dashboard", nextUrl));
+    }
+  }
 
-      // Other roles (BAKERY) continue to regular dashboard
-      return NextResponse.next();
+  if (isDashboard) {
+    if (!isLoggedIn) {
+      return NextResponse.redirect(new URL("/sign-in", nextUrl));
+    }
+    if (isAdmin) {
+      // Admin cố vào /dashboard sẽ bị chuyển sang /dashboard/admin
+      return NextResponse.redirect(new URL("/dashboard/admin", nextUrl));
+    }
+    if (!isBakery) {
+      // Role khác không được vào dashboard
+      return NextResponse.redirect(new URL("/sign-in", nextUrl));
     }
   }
 
   return NextResponse.next();
-}
+});
 
-// Configure matcher for the middleware
 export const config = {
-  matcher: ["/dashboard"],
+  matcher: ["/dashboard/:path*", "/dashboard"],
 };
