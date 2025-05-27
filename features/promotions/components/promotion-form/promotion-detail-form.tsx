@@ -70,11 +70,9 @@ const promotionSchema = z.object({
 
 type promotionFormValue = z.infer<typeof promotionSchema>;
 
-const voucherType = ["PRIVATE", "GLOBAL", "SYSTEM"];
+const voucherType = ["GLOBAL"];
 const voucherTypeLabels = {
-  PRIVATE: "Riêng tư",
-  GLOBAL: "Toàn cục",
-  SYSTEM: "Hệ thống",
+  GLOBAL: "Global",
 };
 
 const PromotionDetailForm = ({ initialData }: PromotionDetailFormProps) => {
@@ -106,7 +104,7 @@ const PromotionDetailForm = ({ initialData }: PromotionDetailFormProps) => {
         quantity: 0,
         usage_count: 0,
         description: "",
-        voucher_type: isAdmin ? "SYSTEM" : "PRIVATE",
+        voucher_type: "GLOBAL",
       };
 
   const form = useForm<promotionFormValue>({
@@ -117,7 +115,7 @@ const PromotionDetailForm = ({ initialData }: PromotionDetailFormProps) => {
   // Update voucher_type when user role changes
   useEffect(() => {
     if (!initialData && isAdmin) {
-      form.setValue("voucher_type", "SYSTEM");
+      form.setValue("voucher_type", "GLOBAL");
     }
   }, [isAdmin, initialData, form]);
 
@@ -139,9 +137,7 @@ const PromotionDetailForm = ({ initialData }: PromotionDetailFormProps) => {
   };
 
   // Filter voucher types based on user role
-  const availableVoucherTypes = isAdmin
-    ? ["SYSTEM"]
-    : voucherType.filter((type) => type !== "SYSTEM");
+  const availableVoucherTypes = ["GLOBAL"];
 
   return (
     <div className="w-full max-w-7xl mx-auto">
@@ -393,7 +389,7 @@ const PromotionDetailForm = ({ initialData }: PromotionDetailFormProps) => {
                         <Select
                           onValueChange={field.onChange}
                           defaultValue={field.value}
-                          disabled={isAdmin} // Disable for all admin cases
+                          disabled={true}
                         >
                           <SelectTrigger className="focus:ring-2 focus:ring-amber-500 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100 rounded-md">
                             <SelectValue placeholder="Chọn loại voucher" />
