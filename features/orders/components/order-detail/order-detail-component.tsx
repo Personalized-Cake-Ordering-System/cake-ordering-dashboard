@@ -1588,12 +1588,20 @@ const OrderDetailComponent = ({ order }: OrderDetailComponentProps) => {
 
                       // If shipping time is less than 10, it's likely in hours (e.g., 1.5 hours)
                       // We convert it to minutes (1.5 hours = 90 minutes)
-                      if (shippingTime < 10) {
-                        return Math.round(shippingTime * 60) + " phút";
-                      }
+                      const totalMinutes = shippingTime < 10 ? Math.round(shippingTime * 60) : Math.round(shippingTime);
 
-                      // Otherwise, it's already in minutes
-                      return Math.round(shippingTime) + " phút";
+                      // Calculate hours and remaining minutes
+                      const hours = Math.floor(totalMinutes / 60);
+                      const minutes = totalMinutes % 60;
+
+                      // Format the time string
+                      if (hours === 0) {
+                        return `${minutes} phút`;
+                      } else if (minutes === 0) {
+                        return `${hours} tiếng`;
+                      } else {
+                        return `${hours} tiếng ${minutes} phút`;
+                      }
                     })()}
                   </p>
                   <p className="text-sm text-muted-foreground">

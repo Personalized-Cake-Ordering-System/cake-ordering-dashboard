@@ -81,7 +81,7 @@ export const orderStatusColumn = {
         case "WAITING_BAKERY_CONFIRM":
           return {
             label: "Đợi xác nhận",
-            bgColor: "bg-cyan-500",
+            bgColor: "bg-yellow-500",
             textColor: "text-white",
           };
         default:
