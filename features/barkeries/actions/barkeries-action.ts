@@ -92,6 +92,19 @@ export async function banBakery(params: string, action: "BAN" | "UN_BAN"): Promi
   return { success: true, data: undefined };
 }
 
+export async function deleteBakery(params: string): Promise<Result<void>> {
+  noStore();
+  const result = await apiRequest(() =>
+    axiosAuth.delete(`/bakeries/${params}`)
+  );
+  console.log(result);
+  if (!result.success) {
+    return { success: false, error: result.error };
+  }
+  revalidatePath(`/dashboard/bakeries/${params}`);
+  return { success: true, data: undefined };
+}
+
 // Function to be used by bakery owners to update their own information
 export async function updateBakeryProfile(
   bakeryId: string,

@@ -15,7 +15,7 @@ import { IBarkery } from "@/features/barkeries/types/barkeries-type";
 import {
   approveBakery,
   getBakery,
-  notApproveBakery,
+  deleteBakery,
 } from "@/features/barkeries/actions/barkeries-action";
 import { CheckCircle, Loader2, ExternalLink, Clock } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -37,7 +37,7 @@ export default function BakeryDetailModal() {
   const [bakery, setBakery] = useState<IBarkery | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isApproving, setIsApproving] = useState(false);
-  const [isRejecting, setIsRejecting] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const { toast } = useToast();
   const router = useRouter();
 
@@ -109,34 +109,34 @@ export default function BakeryDetailModal() {
     }
   };
 
-  const handleReject = async () => {
+  const handleDelete = async () => {
     if (!bakery) return;
-    setIsRejecting(true);
+    if (!window.confirm("Bạn có chắc chắn muốn xóa cửa hàng này?")) return;
+    setIsDeleting(true);
     try {
-      const result = await notApproveBakery(bakery.id);
+      const result = await deleteBakery(bakery.id);
       if (result.success) {
         toast({
-          title: "Đã từ chối",
-          description: "Cửa hàng đã bị từ chối phê duyệt",
+          title: "Đã xóa cửa hàng",
+          description: "Cửa hàng đã bị xóa thành công!",
         });
         onClose();
         router.refresh();
       } else {
         toast({
           title: "Lỗi",
-          description: "Không thể từ chối cửa hàng",
+          description: result.error || "Không thể xóa cửa hàng",
           variant: "destructive",
         });
       }
     } catch (error) {
-      console.error("Error rejecting bakery:", error);
       toast({
         title: "Lỗi",
-        description: "Đã xảy ra lỗi khi từ chối cửa hàng",
+        description: "Đã xảy ra lỗi khi xóa cửa hàng",
         variant: "destructive",
       });
     } finally {
-      setIsRejecting(false);
+      setIsDeleting(false);
     }
   };
 
@@ -500,7 +500,7 @@ export default function BakeryDetailModal() {
             <>
               <Button
                 onClick={handleApprove}
-                disabled={isApproving || isRejecting}
+                disabled={isApproving || isDeleting}
                 size="sm"
                 className="bg-green-600 hover:bg-green-700 text-white h-7 text-xs px-2"
               >
@@ -517,20 +517,20 @@ export default function BakeryDetailModal() {
                 )}
               </Button>
               <Button
-                onClick={handleReject}
-                disabled={isApproving || isRejecting}
+                onClick={handleDelete}
+                disabled={isApproving || isDeleting}
                 size="sm"
                 variant="destructive"
                 className="h-7 text-xs px-2 ml-2"
               >
-                {isRejecting ? (
+                {isDeleting ? (
                   <>
                     <Loader2 className="mr-1 h-3 w-3 animate-spin" />
-                    <span>Đang từ chối</span>
+                    <span>Đang xóa</span>
                   </>
                 ) : (
                   <>
-                    <span>Từ chối</span>
+                    <span>Xóa cửa hàng</span>
                   </>
                 )}
               </Button>

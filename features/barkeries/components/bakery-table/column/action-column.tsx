@@ -21,6 +21,7 @@ import { useSession } from "next-auth/react";
 import { IBarkery } from "@/features/barkeries/types/barkeries-type";
 import { useRouter } from "nextjs-toploader/app";
 import { banBakery } from "@/features/barkeries/actions/barkeries-action";
+import { deleteBakery } from "@/features/barkeries/actions/barkeries-action";
 import { useToast } from "@/components/ui/use-toast";
 import React from "react";
 
@@ -34,6 +35,7 @@ const ActionMenu = ({ row }: ActionMenuProps) => {
   const isPending = row.original.status === "PENDING";
   const { toast } = useToast();
   const [isBanning, setIsBanning] = React.useState(false);
+  const [isDeleting, setIsDeleting] = React.useState(false);
 
   const handleBanToggle = async () => {
     setIsBanning(true);
@@ -62,6 +64,35 @@ const ActionMenu = ({ row }: ActionMenuProps) => {
       });
     } finally {
       setIsBanning(false);
+    }
+  };
+
+  const handleDelete = async () => {
+    if (!window.confirm("Bạn có chắc chắn muốn xóa cửa hàng này?")) return;
+    setIsDeleting(true);
+    try {
+      const result = await deleteBakery(row.original.id);
+      if (result.success) {
+        toast({
+          title: "Đã xóa cửa hàng",
+          description: "Cửa hàng đã bị xóa thành công!",
+        });
+        router.refresh();
+      } else {
+        toast({
+          title: "Lỗi",
+          description: result.error || "Không thể xóa cửa hàng",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Lỗi",
+        description: "Đã xảy ra lỗi khi xóa cửa hàng",
+        variant: "destructive",
+      });
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -118,6 +149,15 @@ const ActionMenu = ({ row }: ActionMenuProps) => {
           {isBanning
             ? (row.original.status === "BANNED" ? "Đang mở lại..." : "Đang cấm...")
             : (row.original.status === "BANNED" ? "Bỏ cấm" : "Cấm cửa hàng")}
+        </DropdownMenuItem>
+
+        <DropdownMenuItem
+          onClick={handleDelete}
+          disabled={isDeleting}
+          className="cursor-pointer hover:bg-red-200 focus:bg-red-200 text-red-700"
+        >
+          <Trash2 className="mr-2 h-4 w-4 text-red-700" />
+          {isDeleting ? "Đang xóa..." : "Xóa cửa hàng"}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
