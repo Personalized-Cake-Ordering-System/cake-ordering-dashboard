@@ -419,7 +419,7 @@ const ActionMenu = ({ row }: ActionMenuProps) => {
               <Button
                 onClick={handleMoveToNextStatus}
                 disabled={isLoading}
-                className="bg-emerald-600 hover:bg-emerald-700 transition-all hover:opacity-90 text-white"
+                className="transition-all hover:opacity-90 text-white"
               >
                 {isLoading ? (
                   <div className="flex items-center gap-1.5">

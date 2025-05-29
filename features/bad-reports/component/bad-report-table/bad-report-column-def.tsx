@@ -19,7 +19,7 @@ export function fetchBadReportTableColumnDefs(): ColumnDef<
     typeColumn,
     customerColumn,
     statusColumn,
-    contentColumn,
+    // contentColumn,
     actionColumn,
   ];
 }
