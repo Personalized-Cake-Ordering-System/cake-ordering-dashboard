@@ -22,12 +22,12 @@ const OrdersPage = ({ searchParams }: IndexPageProps) => {
           <h1 className="text-3xl font-bold tracking-tight text-green-800 dark:text-green-400">
             Quản lý đơn hàng
           </h1>
-          <div className="flex gap-2">
+          {/* <div className="flex gap-2">
             <button className="inline-flex items-center justify-center rounded-md bg-green-600 px-4 py-2 text-sm font-medium text-white hover:bg-green-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-green-500">
               <Package className="mr-2 h-4 w-4" />
               Xuất báo cáo
             </button>
-          </div>
+          </div> */}
         </div>
 
         <Card className="bg-white dark:bg-gray-800 border-green-100 dark:border-green-800 shadow-lg">

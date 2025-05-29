@@ -308,7 +308,7 @@ const BadReportDetail = ({ report }: BadReportDetailProps) => {
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-1 p-3 bg-muted/10 rounded-lg">
+                  {/* <div className="space-y-1 p-3 bg-muted/10 rounded-lg">
                     <p className="font-medium text-sm text-muted-foreground">
                       Ngày tạo
                     </p>
@@ -318,7 +318,7 @@ const BadReportDetail = ({ report }: BadReportDetailProps) => {
                         {formatDate(report.created_at)}
                       </span>
                     </div>
-                  </div>
+                  </div> */}
 
                   {report.updated_at ? (
                     <div className="space-y-1 p-3 bg-muted/10 rounded-lg">
@@ -1063,9 +1063,9 @@ const TimelineItem = ({
           )}
           {title}
         </h4>
-        <span className="text-xs text-muted-foreground bg-background/50 px-2 py-1 rounded-full">
+        {/* <span className="text-xs text-muted-foreground bg-background/50 px-2 py-1 rounded-full">
           {date}
-        </span>
+        </span> */}
       </div>
       <p className="text-sm text-muted-foreground mt-1">{description}</p>
     </div>
