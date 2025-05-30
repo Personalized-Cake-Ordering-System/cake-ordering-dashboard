@@ -459,7 +459,7 @@ const OrderDetailComponent = ({ order }: OrderDetailComponentProps) => {
         case "PROCESSING":
           return {
             text: "Bánh đã sẵn sàng để lấy",
-            color: "bg-indigo-600 hover:bg-indigo-700",
+            color: "hover:bg-indigo-700",
             description:
               "Chuyển đơn hàng sang trạng thái lấy tại chỗ? Bạn có thể tải lên hình ảnh bánh hoàn thiện (không bắt buộc).",
             confirmText: "Xác nhận sẵn sàng",
@@ -1068,7 +1068,51 @@ const OrderDetailComponent = ({ order }: OrderDetailComponentProps) => {
                                             <div className="flex items-center gap-2">
                                               <div className="w-1.5 h-1.5 rounded-full bg-amber-500"></div>
                                               <span className="text-xs font-medium">
-                                                {type}
+                                                {(() => {
+                                                  // Hàm chuyển đổi tên thành phần sang tiếng Việt
+                                                  const translatePartType = (
+                                                    type: string
+                                                  ) => {
+                                                    switch (
+                                                      type.toUpperCase()
+                                                    ) {
+                                                      case "SIZE":
+                                                        return "Kích thước";
+                                                      case "SPONGE":
+                                                        return "Cốt bánh";
+                                                      case "GOO":
+                                                        return "Kem";
+                                                      case "ICING":
+                                                        return "Phủ bề mặt";
+                                                      case "FILLING":
+                                                        return "Nhân bánh";
+                                                      case "OUTERICING":
+                                                        return "Phủ ngoài";
+                                                      case "DECORATION":
+                                                        return "Trang trí";
+                                                      case "SPRINKLES":
+                                                        return "Rắc phủ";
+                                                      case "DRIP":
+                                                        return "Trang trí chảy";
+                                                      case "TALLSKIRT":
+                                                        return "Viền cao";
+                                                      case "SHORTSKIRT":
+                                                        return "Viền thấp";
+                                                      case "BLING":
+                                                        return "Trang trí kim tuyến";
+                                                      case "CANDLES":
+                                                        return "Nến";
+                                                      case "CAKEBOARD":
+                                                        return "Đế bánh";
+                                                      default:
+                                                        return type;
+                                                    }
+                                                  };
+
+                                                  return translatePartType(
+                                                    type
+                                                  );
+                                                })()}
                                               </span>
                                               <span className="text-xs text-muted-foreground">
                                                 ({parts.length})
@@ -1279,7 +1323,51 @@ const OrderDetailComponent = ({ order }: OrderDetailComponentProps) => {
                                             <div className="flex items-center gap-2">
                                               <div className="w-1.5 h-1.5 rounded-full bg-purple-500"></div>
                                               <span className="text-xs font-medium">
-                                                {type}
+                                                {(() => {
+                                                  // Hàm chuyển đổi tên thành phần sang tiếng Việt
+                                                  const translatePartType = (
+                                                    type: string
+                                                  ) => {
+                                                    switch (
+                                                      type.toUpperCase()
+                                                    ) {
+                                                      case "SIZE":
+                                                        return "Kích thước";
+                                                      case "SPONGE":
+                                                        return "Cốt bánh";
+                                                      case "GOO":
+                                                        return "Kem";
+                                                      case "ICING":
+                                                        return "Phủ bề mặt";
+                                                      case "FILLING":
+                                                        return "Nhân bánh";
+                                                      case "OUTERICING":
+                                                        return "Phủ ngoài";
+                                                      case "DECORATION":
+                                                        return "Trang trí";
+                                                      case "SPRINKLES":
+                                                        return "Rắc phủ";
+                                                      case "DRIP":
+                                                        return "Trang trí chảy";
+                                                      case "TALLSKIRT":
+                                                        return "Viền cao";
+                                                      case "SHORTSKIRT":
+                                                        return "Viền thấp";
+                                                      case "BLING":
+                                                        return "Trang trí kim tuyến";
+                                                      case "CANDLES":
+                                                        return "Nến";
+                                                      case "CAKEBOARD":
+                                                        return "Đế bánh";
+                                                      default:
+                                                        return type;
+                                                    }
+                                                  };
+
+                                                  return translatePartType(
+                                                    type
+                                                  );
+                                                })()}
                                               </span>
                                               <span className="text-xs text-muted-foreground">
                                                 ({decorations.length})
@@ -1568,7 +1656,16 @@ const OrderDetailComponent = ({ order }: OrderDetailComponentProps) => {
                 </div>
                 <div>
                   <p className="font-medium text-foreground">
-                    {order.shipping_type}
+                    {(() => {
+                      switch ((order.shipping_type || "").toUpperCase()) {
+                        case "DELIVERY":
+                          return "Giao hàng";
+                        case "PICKUP":
+                          return "Nhận tại cửa hàng";
+                        default:
+                          return order.shipping_type || "Không xác định";
+                      }
+                    })()}
                   </p>
                   <p className="text-sm text-muted-foreground">
                     Phương thức vận chuyển
@@ -1588,7 +1685,10 @@ const OrderDetailComponent = ({ order }: OrderDetailComponentProps) => {
 
                       // If shipping time is less than 10, it's likely in hours (e.g., 1.5 hours)
                       // We convert it to minutes (1.5 hours = 90 minutes)
-                      const totalMinutes = shippingTime < 10 ? Math.round(shippingTime * 60) : Math.round(shippingTime);
+                      const totalMinutes =
+                        shippingTime < 10
+                          ? Math.round(shippingTime * 60)
+                          : Math.round(shippingTime);
 
                       // Calculate hours and remaining minutes
                       const hours = Math.floor(totalMinutes / 60);
