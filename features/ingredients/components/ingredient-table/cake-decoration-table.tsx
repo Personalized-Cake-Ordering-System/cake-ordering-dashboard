@@ -63,27 +63,31 @@ const getItemIcon = (type: string) => {
 // Tên hiển thị tiếng Việt cho các loại trang trí
 const getTypeDisplayName = (type: string): string => {
   const typeNameMap: Record<string, string> = {
-    OuterIcing: "Phủ Kem Ngoài",
-    Sprinkles: "Hạt Rắc",
-    Decoration: "Trang Trí",
-    Bling: "Đồ Trang Trí Lấp Lánh",
-    TallSkirt: "Váy Bánh Cao",
-    Drip: "Sốt Chảy Tràn",
-    ShortSkirt: "Váy Bánh Ngắn",
+    OUTERICING: "Phủ ngoài",
+    SPRINKLES: "Rắc phủ",
+    DECORATION: "Trang trí",
+    BLING: "Trang trí kim tuyến",
+    TALLSKIRT: "Viền cao",
+    DRIP: "Trang trí chảy",
+    SHORTSKIRT: "Viền thấp",
+    CANDLES: "Nến",
+    CAKEBOARD: "Đế bánh",
   };
 
-  return typeNameMap[type] || type;
+  return typeNameMap[type.toUpperCase()] || type;
 };
 
 // Predefined types for cake decorations
 const PREDEFINED_TYPES: Record<string, string> = {
-  OuterIcing: "Phủ Kem Ngoài",
-  Sprinkles: "Hạt Rắc",
-  Decoration: "Trang Trí",
-  Bling: "Đồ Trang Trí Lấp Lánh",
-  TallSkirt: "Váy Bánh Cao",
-  Drip: "Sốt Chảy Tràn",
-  ShortSkirt: "Váy Bánh Ngắn",
+  OUTERICING: "Phủ ngoài",
+  SPRINKLES: "Rắc phủ",
+  DECORATION: "Trang trí",
+  BLING: "Trang trí kim tuyến",
+  TALLSKIRT: "Viền cao",
+  DRIP: "Trang trí chảy",
+  SHORTSKIRT: "Viền thấp",
+  CANDLES: "Nến",
+  CAKEBOARD: "Đế bánh",
 };
 
 interface CakeDecorationTableProps {

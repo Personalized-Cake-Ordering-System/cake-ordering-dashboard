@@ -522,7 +522,7 @@ const CollectionCakeDecorationModal = () => {
           Hình Ảnh Trang Trí
         </FormLabel>
         <div className="flex flex-col gap-1.5">
-          <div className="relative w-full h-24 border rounded-md border-dashed flex items-center justify-center bg-gray-50/50 group">
+          <div className="relative w-full h-40 border rounded-md border-dashed flex items-center justify-center bg-gray-50/50 group overflow-hidden">
             {imageLoading || fetchingImage ? (
               <div className="flex items-center justify-center">
                 <Loader className="h-4 w-4 animate-spin text-primary" />
@@ -532,14 +532,14 @@ const CollectionCakeDecorationModal = () => {
                 src={uploadedFileUrl}
                 alt="Decoration preview"
                 fill
-                className="object-contain p-2"
+                className="object-contain rounded-md w-full h-full"
               />
             ) : imagePreview ? (
               <Image
                 src={imagePreview}
                 alt="Decoration preview"
                 fill
-                className="object-contain p-2"
+                className="object-contain rounded-md w-full h-full"
               />
             ) : (
               <div className="flex flex-col items-center justify-center text-gray-400 text-center px-2">
@@ -871,7 +871,7 @@ const CollectionCakeDecorationModal = () => {
 
   return (
     <Dialog open={isOpenModal} onOpenChange={handleClose}>
-      <DialogContent className="max-w-sm max-h-[80vh] rounded-xl overflow-y-auto p-4">
+      <DialogContent className="w-full max-w-md max-h-[80vh] rounded-xl overflow-y-auto p-3">
         <DialogHeader className="pb-1">
           <DialogTitle className="text-base font-bold flex items-center gap-1.5">
             <CakeSlice className="w-4 h-4" />

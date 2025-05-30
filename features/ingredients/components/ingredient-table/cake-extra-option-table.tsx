@@ -63,17 +63,17 @@ const getItemIcon = (type: string) => {
 // Tên hiển thị tiếng Việt cho các loại tùy chọn thêm
 const getTypeDisplayName = (type: string): string => {
   const typeNameMap: Record<string, string> = {
-    Candles: "Nến",
-    CakeBoard: "Đế Bánh",
+    CANDLES: "Nến",
+    CAKEBOARD: "Đế bánh",
   };
 
-  return typeNameMap[type] || type;
+  return typeNameMap[type.toUpperCase()] || type;
 };
 
 // Predefined types for cake extra options
 const PREDEFINED_TYPES: Record<string, string> = {
-  Candles: "Nến",
-  CakeBoard: "Đế Bánh",
+  CANDLES: "Nến",
+  CAKEBOARD: "Đế bánh",
 };
 
 interface CakeExtraOptionTableProps {

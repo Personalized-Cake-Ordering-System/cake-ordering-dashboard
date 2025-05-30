@@ -64,23 +64,41 @@ const getItemIcon = (type: string) => {
 // Tên hiển thị tiếng Việt cho các loại phần bánh
 const getTypeDisplayName = (type: string): string => {
   const typeNameMap: Record<string, string> = {
-    Goo: "Kem Nhân",
-    Icing: "Lớp Phủ",
-    Filling: "Nhân Bánh",
-    Sponge: "Tầng Bánh",
-    Size: "Kích Thước",
+    SIZE: "Kích thước",
+    SPONGE: "Cốt bánh",
+    GOO: "Kem",
+    ICING: "Phủ bề mặt",
+    FILLING: "Nhân bánh",
+    OUTERICING: "Phủ ngoài",
+    DECORATION: "Trang trí",
+    SPRINKLES: "Rắc phủ",
+    DRIP: "Trang trí chảy",
+    TALLSKIRT: "Viền cao",
+    SHORTSKIRT: "Viền thấp",
+    BLING: "Trang trí kim tuyến",
+    CANDLES: "Nến",
+    CAKEBOARD: "Đế bánh",
   };
 
-  return typeNameMap[type] || type;
+  return typeNameMap[type.toUpperCase()] || type;
 };
 
 // Predefined types for cake parts
 const PREDEFINED_TYPES: Record<string, string> = {
-  Goo: "Kem Nhân",
-  Icing: "Lớp Phủ",
-  Filling: "Nhân Bánh",
-  Sponge: "Tầng Bánh",
-  Size: "Kích Thước",
+  SIZE: "Kích thước",
+  SPONGE: "Cốt bánh",
+  GOO: "Kem",
+  ICING: "Phủ bề mặt",
+  FILLING: "Nhân bánh",
+  OUTERICING: "Phủ ngoài",
+  DECORATION: "Trang trí",
+  SPRINKLES: "Rắc phủ",
+  DRIP: "Trang trí chảy",
+  TALLSKIRT: "Viền cao",
+  SHORTSKIRT: "Viền thấp",
+  BLING: "Trang trí kim tuyến",
+  CANDLES: "Nến",
+  CAKEBOARD: "Đế bánh",
 };
 
 interface CakePartTableProps {
