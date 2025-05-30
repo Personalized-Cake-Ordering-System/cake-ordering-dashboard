@@ -24,6 +24,7 @@ import { banBakery } from "@/features/barkeries/actions/barkeries-action";
 import { deleteBakery } from "@/features/barkeries/actions/barkeries-action";
 import { useToast } from "@/components/ui/use-toast";
 import React from "react";
+import AlertModal from "@/components/modals/alert-modal";
 
 interface ActionMenuProps {
   row: Row<IBarkery>;
@@ -36,6 +37,7 @@ const ActionMenu = ({ row }: ActionMenuProps) => {
   const { toast } = useToast();
   const [isBanning, setIsBanning] = React.useState(false);
   const [isDeleting, setIsDeleting] = React.useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = React.useState(false);
 
   const handleBanToggle = async () => {
     setIsBanning(true);
@@ -46,20 +48,26 @@ const ActionMenu = ({ row }: ActionMenuProps) => {
       if (result.success) {
         toast({
           title: isBanned ? "Đã bỏ cấm cửa hàng" : "Đã cấm cửa hàng",
-          description: isBanned ? "Cửa hàng đã được mở lại!" : "Cửa hàng đã bị cấm thành công!",
+          description: isBanned
+            ? "Cửa hàng đã được mở lại!"
+            : "Cửa hàng đã bị cấm thành công!",
         });
         router.refresh();
       } else {
         toast({
           title: "Lỗi",
-          description: result.error || (isBanned ? "Không thể bỏ cấm cửa hàng" : "Không thể cấm cửa hàng"),
+          description:
+            result.error ||
+            (isBanned ? "Không thể bỏ cấm cửa hàng" : "Không thể cấm cửa hàng"),
           variant: "destructive",
         });
       }
     } catch (error) {
       toast({
         title: "Lỗi",
-        description: isBanned ? "Đã xảy ra lỗi khi bỏ cấm cửa hàng" : "Đã xảy ra lỗi khi cấm cửa hàng",
+        description: isBanned
+          ? "Đã xảy ra lỗi khi bỏ cấm cửa hàng"
+          : "Đã xảy ra lỗi khi cấm cửa hàng",
         variant: "destructive",
       });
     } finally {
@@ -68,7 +76,6 @@ const ActionMenu = ({ row }: ActionMenuProps) => {
   };
 
   const handleDelete = async () => {
-    if (!window.confirm("Bạn có chắc chắn muốn xóa cửa hàng này?")) return;
     setIsDeleting(true);
     try {
       const result = await deleteBakery(row.original.id);
@@ -93,74 +100,97 @@ const ActionMenu = ({ row }: ActionMenuProps) => {
       });
     } finally {
       setIsDeleting(false);
+      setIsDeleteModalOpen(false);
     }
   };
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button
-          aria-label="Open actions menu"
-          variant="ghost"
-          className="flex size-8 p-0 hover:bg-accent/50 focus:ring-2 focus:ring-primary/30"
-        >
-          <DotsHorizontalIcon className="size-4" aria-hidden="true" />
-        </Button>
-      </DropdownMenuTrigger>
+    <>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button
+            aria-label="Open actions menu"
+            variant="ghost"
+            className="flex size-8 p-0 hover:bg-accent/50 focus:ring-2 focus:ring-primary/30"
+          >
+            <DotsHorizontalIcon className="size-4" aria-hidden="true" />
+          </Button>
+        </DropdownMenuTrigger>
 
-      <DropdownMenuContent
-        align="end"
-        className="w-[180px] border shadow-md rounded-md"
-      >
-        {isPending && (
+        <DropdownMenuContent
+          align="end"
+          className="w-[180px] border shadow-md rounded-md"
+        >
+          {isPending && (
+            <DropdownMenuItem
+              onClick={() =>
+                onOpen("bakeryDetailModal", { bakeryId: row.original.id })
+              }
+              className="cursor-pointer hover:bg-accent/50 focus:bg-accent/50"
+            >
+              <CheckCircle className="mr-2 h-4 w-4 text-green-500" />
+              <span>Xét duyệt</span>
+            </DropdownMenuItem>
+          )}
+
           <DropdownMenuItem
             onClick={() =>
-              onOpen("bakeryDetailModal", { bakeryId: row.original.id })
+              router.push(`/dashboard/bakeries/${row.original.id}`)
             }
             className="cursor-pointer hover:bg-accent/50 focus:bg-accent/50"
           >
-            <CheckCircle className="mr-2 h-4 w-4 text-green-500" />
-            <span>Xét duyệt</span>
+            <Contact className="mr-2 h-4 w-4 text-green-500" />
+            <span>Chi tiết</span>
           </DropdownMenuItem>
-        )}
 
-        <DropdownMenuItem
-          onClick={() => router.push(`/dashboard/bakeries/${row.original.id}`)}
-          className="cursor-pointer hover:bg-accent/50 focus:bg-accent/50"
-        >
-          <Contact className="mr-2 h-4 w-4 text-green-500" />
-          <span>Chi tiết</span>
-        </DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={handleBanToggle}
+            disabled={isBanning}
+            className={
+              row.original.status === "BANNED"
+                ? "cursor-pointer hover:bg-green-100 focus:bg-green-100 text-green-600"
+                : "cursor-pointer hover:bg-red-100 focus:bg-red-100 text-red-600"
+            }
+          >
+            <Trash2
+              className={
+                row.original.status === "BANNED"
+                  ? "mr-2 h-4 w-4 text-green-500"
+                  : "mr-2 h-4 w-4 text-red-500"
+              }
+            />
+            {isBanning
+              ? row.original.status === "BANNED"
+                ? "Đang mở lại..."
+                : "Đang cấm..."
+              : row.original.status === "BANNED"
+              ? "Bỏ cấm"
+              : "Cấm cửa hàng"}
+          </DropdownMenuItem>
 
-        <DropdownMenuItem
-          onClick={handleBanToggle}
-          disabled={isBanning}
-          className={
-            row.original.status === "BANNED"
-              ? "cursor-pointer hover:bg-green-100 focus:bg-green-100 text-green-600"
-              : "cursor-pointer hover:bg-red-100 focus:bg-red-100 text-red-600"
-          }
-        >
-          <Trash2 className={
-            row.original.status === "BANNED"
-              ? "mr-2 h-4 w-4 text-green-500"
-              : "mr-2 h-4 w-4 text-red-500"
-          } />
-          {isBanning
-            ? (row.original.status === "BANNED" ? "Đang mở lại..." : "Đang cấm...")
-            : (row.original.status === "BANNED" ? "Bỏ cấm" : "Cấm cửa hàng")}
-        </DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => setIsDeleteModalOpen(true)}
+            disabled={isDeleting}
+            className="cursor-pointer hover:bg-red-200 focus:bg-red-200 text-red-700"
+          >
+            <Trash2 className="mr-2 h-4 w-4 text-red-700" />
+            {isDeleting ? "Đang xóa..." : "Xóa cửa hàng"}
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
 
-        <DropdownMenuItem
-          onClick={handleDelete}
-          disabled={isDeleting}
-          className="cursor-pointer hover:bg-red-200 focus:bg-red-200 text-red-700"
-        >
-          <Trash2 className="mr-2 h-4 w-4 text-red-700" />
-          {isDeleting ? "Đang xóa..." : "Xóa cửa hàng"}
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+      <AlertModal
+        isOpen={isDeleteModalOpen}
+        onClose={() => setIsDeleteModalOpen(false)}
+        onConfirm={handleDelete}
+        loading={isDeleting}
+        title="Xóa cửa hàng"
+        description="Bạn có chắc chắn muốn xóa cửa hàng này? Hành động này không thể hoàn tác."
+        variant="danger"
+        confirmLabel="Xóa"
+        cancelLabel="Hủy"
+      />
+    </>
   );
 };
 
